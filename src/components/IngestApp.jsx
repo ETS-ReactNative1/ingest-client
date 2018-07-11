@@ -11,7 +11,7 @@ export default class IngestApp extends Component {
   }
 
   componentWillMount() {
-      return this.props.me()
+      // return this.props.me()
   }
 
   componentDidMount() {
@@ -20,7 +20,8 @@ export default class IngestApp extends Component {
   render() {
     return (
       <div>
-        {!this.props.session.loaded ? <Loading/> : <App/>}
+        {/*{!this.props.session.loaded ? <Loading/> : <App/>}*/}
+        <App/>
       </div>
     )
   }
