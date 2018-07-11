@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
 // TODO Move me elsewhere!
-const host = window.location.protocol + "//" + process.env.REACT_APP_API_HOST
+const host = 'http://18.220.133.76:1340'; //temp
 
 export default class clientAPI {
   constructor() {
