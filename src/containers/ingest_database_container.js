@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import IngestApp from '../components/IngestApp.jsx'
+import IngestDatabase from '../components/IngestDatabase.jsx'
 import { me } from '../actions/session'
 
 function mapStateToProps(state) {
@@ -9,8 +9,8 @@ function mapStateToProps(state) {
   };
 }
 
-const ingestContainer = connect(mapStateToProps, {
+const ingestDatabaseContainer = connect(mapStateToProps, {
   me
-})(IngestApp);
+})(IngestDatabase);
 
-export default ingestContainer;
+export default ingestDatabaseContainer;

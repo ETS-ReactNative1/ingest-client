@@ -6,7 +6,7 @@ import { csvReducer } from './csv_reducer'
 const rootReducer = combineReducers({
   router: routerReducer,
   session: sessionReducer,
-  csv: csvReducer,
+  csv: csvReducer
 });
 
 export default rootReducer;

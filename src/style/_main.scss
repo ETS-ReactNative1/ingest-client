@@ -1,0 +1,19 @@
+.start-ingest {
+  margin-top: 20px;
+}
+
+.file-meta {
+  color: #FC3C63;
+  font-size: 12px;
+  font-weight: 600;
+  padding-right: 10px;
+}
+
+.field-mapping {
+  .toggle-cell {
+    vertical-align: bottom;
+  }
+  .solr-field-name {
+    vertical-align: middle;
+  }
+}

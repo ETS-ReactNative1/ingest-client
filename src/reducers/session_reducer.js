@@ -22,6 +22,23 @@ export function sessionReducer(state = initialState, action = {}) {
         loaded: false,
         loadError: action.error
       };
+    // case 'REPLACE_SOURCE':
+    //   return {
+    //     ...state,
+    //     source: action.result,
+    //     sourceArr: Object.keys(action.result).map((key, index) => {
+    //       return {
+    //         ...action.result[key],
+    //         key: key
+    //       }
+    //     }),
+    //     availableSources: Object.keys(action.result).map((key, index) => {
+    //       return {
+    //         ...action.result[key],
+    //         key: key
+    //       }
+    //     })
+    //   }
     default:
       return state;
   }

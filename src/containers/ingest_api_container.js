@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import IngestApp from '../components/IngestApp.jsx'
+import IngestApi from '../components/IngestApi.jsx'
 import { me } from '../actions/session'
 
 function mapStateToProps(state) {
@@ -9,8 +9,8 @@ function mapStateToProps(state) {
   };
 }
 
-const ingestContainer = connect(mapStateToProps, {
+const ingestApiContainer = connect(mapStateToProps, {
   me
-})(IngestApp);
+})(IngestApi);
 
-export default ingestContainer;
+export default ingestApiContainer;
