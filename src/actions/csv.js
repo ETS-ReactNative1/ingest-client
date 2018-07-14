@@ -7,7 +7,7 @@ export function ingest(mappings, file) {
   data.append('csv', file);
   return dispatch => {
     dispatch(ingestRequestedAction());
-    return axios('http://18.220.133.76:1340/ingest/csv', { //temp
+    return axios(process.env.REACT_APP_API_URL+'/ingest/csv', { //temp
       method: "post",
       data: data,
       withCredentials: true
