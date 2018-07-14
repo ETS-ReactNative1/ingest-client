@@ -62,7 +62,6 @@ export default class IngestCSV extends Component {
     const isIngesting = this.props.csv.isIngesting;
     return (
       <div>
-      ENV: {process.env.NODE_ENV} 
         <div className="file-upload">
           <div className="file">
             <label className="file-label">
