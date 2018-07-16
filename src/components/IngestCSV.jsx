@@ -16,6 +16,7 @@ export default class IngestCSV extends Component {
 
   componentDidMount() {
     return this.props.getInitial()
+      .then(() => this.props.receiveCsvIngestUpdate())
   }
 
   handleUploadFile = (event) => {
@@ -61,7 +62,7 @@ export default class IngestCSV extends Component {
   render() {
     const isIngesting = this.props.csv.isIngesting;
     return (
-      <div>
+      <div className="csv-ingest">
         <div className="file-upload">
           <div className="file">
             <label className="file-label">
@@ -146,8 +147,17 @@ export default class IngestCSV extends Component {
           </table>
         </div>
         <div className="start-ingest">
-          <a className="button is-link" onClick={() => this.handleStartIngest()}>{isIngesting ? 'Ingesting...' : 'Start Ingest'}</a>
+          <a className={`button is-link ${isIngesting ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest()} disabled={isIngesting ? true : false}>{isIngesting ? 'Ingesting...' : 'Start Ingest'}</a>
         </div>
+        { this.props.csv.status && !this.props.csv.isIngestError && isIngesting &&
+          <div className="status">Progress: {this.props.csv.status}</div>
+        }
+        { this.props.csv.status && this.props.csv.isIngestError &&
+          <div className="status is-error">Error: {this.props.csv.status}</div>
+        }
+        { this.props.csv.isIngestSuccess && !isIngesting &&
+          <div className="status is-complete">Successful ingestion!</div>
+        }
       </div>
     )
   }

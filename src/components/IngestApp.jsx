@@ -11,7 +11,13 @@ export default class IngestApp extends Component {
   }
 
   componentWillMount() {
-      // return this.props.me()
+    return this.props.me()
+    .then(() => this.props.connectSocket())
+    .then(() => this.props.loaded())
+    .then(() => this.props.onSocketDisconnected())
+    .then(() => this.props.onSocketReconnecting())
+    .then(() => this.props.onSocketReconnectSuccess())
+    .then(() => this.props.onSocketReconnectFailure())
   }
 
   componentDidMount() {
@@ -20,8 +26,7 @@ export default class IngestApp extends Component {
   render() {
     return (
       <div>
-        {/*{!this.props.session.loaded ? <Loading/> : <App/>}*/}
-        <App/>
+        {this.props.load.isActive ? <Loading/> : <App/>}
       </div>
     )
   }

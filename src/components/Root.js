@@ -5,10 +5,12 @@ import IngestApp from '../containers/ingest_container.js';
 import { ConnectedRouter } from 'react-router-redux'
 import history from '../helpers/history'
 
-export const Root = ({ store }) => (
+const Root = ({ store }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
         <Route path='/' component={IngestApp} />
     </ConnectedRouter>
   </Provider>
 );
+
+export default Root;

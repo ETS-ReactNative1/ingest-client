@@ -4,19 +4,21 @@ import Papa from 'papaparse';
 export function ingest(mappings, file) {
   const data = new FormData();
   data.append('mappings', JSON.stringify(mappings));
+  data.append('fileSize', file ? file.size : '');
   data.append('csv', file);
   return dispatch => {
     dispatch(ingestRequestedAction());
     return axios(process.env.REACT_APP_API_URL+'/ingest/csv', { //temp
       method: "post",
       data: data,
-      withCredentials: true
+      withCredentials: true,
+      timeout: 100000000
     }).then((response) => {
       dispatch(ingestFulfilledAction(response.data));
       return response.data;
     })
     .catch((error) => {
-      dispatch(ingestRejectedAction());
+      dispatch(ingestRejectedAction(error.response.data));
     });
   }
 }
@@ -27,9 +29,10 @@ function ingestRequestedAction() {
   };
 }
 
-function ingestRejectedAction() {
+function ingestRejectedAction(error) {
   return {
-    type: 'INGEST_REJECTED'
+    type: 'INGEST_REJECTED',
+    result: error
   }
 }
 
@@ -120,4 +123,21 @@ function parseHeaderFulfilledAction(data, file) {
       file: file
     }
   };
+}
+
+export function receiveCsvIngestUpdate() {
+  return (dispatch) => {
+    const csvIngestUpdate = (update) => {
+      return dispatch({
+        type: 'RECEIVE_CSV_INGEST_UPDATE',
+        result: update,
+      });
+    };
+
+    return dispatch({
+      type: 'socket',
+      types: ['a', 'b', null],
+      promise: (socket) => socket.on('csvIngestUpdate', csvIngestUpdate),
+    });
+  }
 }

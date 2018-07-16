@@ -3,7 +3,10 @@ import Loading from '../components/Loading'
 
 function mapStateToProps(state) {
   return {
-    router: state.router
+    router: state.router,
+    socket: state.socket,
+    auth: state.auth,
+    load: state.load
   };
 }
 

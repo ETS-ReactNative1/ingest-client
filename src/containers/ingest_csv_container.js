@@ -1,6 +1,14 @@
 import { connect } from 'react-redux'
 import IngestCSV from '../components/IngestCSV.jsx'
-import { ingest, parseHeader, initial as getInitial, pair, addText, toggleInput } from '../actions/csv'
+import {
+  ingest,
+  parseHeader,
+  initial as getInitial,
+  pair,
+  addText,
+  toggleInput,
+  receiveCsvIngestUpdate
+} from '../actions/csv'
 
 function mapStateToProps(state) {
   return {
@@ -15,7 +23,8 @@ const ingestCSVContainer = connect(mapStateToProps, {
   ingest,
   parseHeader,
   addText,
-  toggleInput
+  toggleInput,
+  receiveCsvIngestUpdate
 })(IngestCSV);
 
 export default ingestCSVContainer;

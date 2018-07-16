@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class Loading extends Component {
+export default class Lobby extends Component {
 
   constructor(props) {
     super(props);
@@ -11,7 +11,7 @@ export default class Loading extends Component {
   render() {
     return (
       <div className="load">
-        <div className="message">Loading Session...</div>
+        <div className="message">{this.props.load.message}</div>
       </div>
     )
   }

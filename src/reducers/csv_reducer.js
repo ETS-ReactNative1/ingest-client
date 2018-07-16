@@ -7,28 +7,32 @@ const initialState = {
   availableSources: [],
   file: null,
   isIngesting: false,
-  isIngestError: false
+  isIngestError: false,
+  status: null
 };
 export function csvReducer(state = initialState, action = {}) {
   switch(action.type) {
     case 'INGEST_REQUESTED': {
       return {
         ...state,
-        isIngesting: true
+        isIngesting: true,
+        isIngestError: false
       }
     }
     case 'INGEST_REJECTED': {
       return {
         ...state,
         isIngesting: false,
-        isIngestError: true
+        isIngestError: true,
+        status: action.result.message
       }
     }
     case 'INGEST_FULFILLED': {
       return {
         ...state,
         isIngesting: false,
-        isIngestError: false
+        isIngestError: false,
+        isIngestSuccess: true
       }
     }
     case 'GET_INITIAL':
@@ -91,7 +95,6 @@ export function csvReducer(state = initialState, action = {}) {
         loadAttempted: true
       }
     case 'TOGGLE_INPUT': {
-      console.log('params: ',action.result);
       const destinationArr = state.destinationArr.map(dest => {
         if (dest.key === action.result.destKey) {
           return {
@@ -179,6 +182,12 @@ export function csvReducer(state = initialState, action = {}) {
           }
         },
         destinationArr: destinationArr
+      }
+    }
+    case 'RECEIVE_CSV_INGEST_UPDATE': {
+      return {
+        ...state,
+        status: action.result.status
       }
     }
     default:
