@@ -11,8 +11,6 @@ export default class IngestApp extends Component {
   }
 
   componentWillMount() {
-    console.log('test...');
-    console.log('HERE: ',this.props.me());
     return this.props.me()
     .then(() => this.props.connectSocket())
     .then(() => this.props.loaded())

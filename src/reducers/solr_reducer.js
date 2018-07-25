@@ -48,7 +48,6 @@ export function solrReducer(state = initialState, action = {}) {
       }
     }
     case 'RECEIVE_NUM_DOCS': {
-      console.log('action: ',action);
       return {
         ...state,
         numDocs: action.result.numDocs

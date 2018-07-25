@@ -51,23 +51,10 @@ const ValidateAttributeUpdateMiddleware = ({ dispatch, getState}) => next => act
     attrName = 'file'
   }
 
-  // console.log('updatedCsv: ',updatedCsv);
-  //
-  // // const attrName = newAttributes.destKey;
-
   action.errors = {
     [attrName]: !csvAttributeIsValid(updatedCsv, attrName)
   }
 
-  // console.log('ACTION: ',action);
-
-  // const { newAttributes } = action;
-  // const { astronaut }     = getState();
-  // let updatedAstronaut    = {...astronaut, ...newAttributes}
-  // const attrName          = Object.keys(newAttributes)[0]
-  // action.errors = {
-  //   [attrName]: !csvAttributeIsValid(updatedAstronaut, attrName)
-  // }
   next(action)
 };
 

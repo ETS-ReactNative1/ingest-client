@@ -6,8 +6,6 @@ export default class Lobby extends Component {
     super(props);
   }
 
-
-
   render() {
     return (
       <div className="load">

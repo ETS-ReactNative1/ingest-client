@@ -76,7 +76,6 @@ export function ingestReducer(state = initialState, action = {}) {
     case 'RECEIVE_INGEST_RECORD_STATUS_UPDATE': {
       //if item is in UI table currently
       if (action.result.id in state.items) {
-        console.log('already in table')
         const itemsArr = state.itemsArr.map(item => {
           if (item.id === action.result.id) {
             return {

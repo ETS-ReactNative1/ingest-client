@@ -1,8 +1,4 @@
 export default function attributeValidators(csv) {
-  console.log({
-    file: fileValid,
-    ...mappingsWithValidators(csv.mappings)
-  })
   return {
     file: fileValid,
     ...mappingsWithValidators(csv.mappings)
@@ -17,8 +13,6 @@ function mappingsWithValidators(mappings) {
 }
 
 function mappingValid(csv, field) {
-  console.log('csv: ',csv);
-  console.log('field: ',field);
   const fieldValue = csv.mappings[field];
   const fieldType = fieldValue.type;
   if (fieldType == 'select' && !fieldValue.sourceField) {
