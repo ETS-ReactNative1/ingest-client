@@ -15,7 +15,13 @@ export default class IngestDatabase extends Component {
   render() {
     return (
       <div>
-        <div className="notification">Database ingest <b>coming soon.</b></div>
+        <section className="section">
+          <div className="columns">
+            <div className="column">
+              <div className="notification">Database ingest <b>coming soon.</b></div>
+            </div>
+          </div>
+        </section>
       </div>
     )
   }

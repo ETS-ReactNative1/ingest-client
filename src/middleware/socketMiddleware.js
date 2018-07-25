@@ -1,4 +1,5 @@
 export default function socketMiddleware(socket) {
+  console.log('running socket middleware...');
   return ({dispatch, getState}) => next => action => {
     if (typeof action === 'function') {
       return action(dispatch, getState);

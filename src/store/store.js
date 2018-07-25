@@ -8,6 +8,8 @@ import thunk from 'redux-thunk'
 import { createLogger } from "redux-logger"
 import socketMiddleware from '../middleware/socketMiddleware';
 import clientMiddleware from '../middleware/clientMiddleware';
+import csvValidationMiddleware from '../middleware/csvValidationMiddleware';
+import csvValidateAttributeUpdateMiddleware from '../middleware/csvValidateAttributeUpdateMiddleware';
 
 export default function configureStore(initialState, socketClient, apiClient) {
 
@@ -16,7 +18,14 @@ export default function configureStore(initialState, socketClient, apiClient) {
   const store = createStore(
     rootReducer,
     initialState,
-    applyMiddleware(thunk, socketMiddleware(socketClient), clientMiddleware(apiClient), logger)
+    applyMiddleware(
+      csvValidationMiddleware,
+      csvValidateAttributeUpdateMiddleware,
+      thunk,
+      socketMiddleware(socketClient),
+      clientMiddleware(apiClient),
+      logger
+    )
   )
 
   return store;

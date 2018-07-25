@@ -7,6 +7,9 @@
   font-size: 12px;
   font-weight: 600;
   padding-right: 10px;
+  &.validation-error {
+    color: $danger;
+  }
 }
 
 .field-mapping {
@@ -15,5 +18,101 @@
   }
   .solr-field-name {
     vertical-align: middle;
+  }
+}
+
+// .right-panel {
+//   .csv-ingest {
+//     .table-reset {
+//       table {
+//         tbody {
+//           tr {
+//             td {
+//               border: none;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+
+.table {
+  td {
+    // border: 0;
+  }
+}
+
+.csv-ingest {
+  table {
+    thead {
+      tr {
+        th {
+          border-bottom: 0;
+        }
+      }
+    }
+    tbody {
+      .mapping-main-row {
+        &.validation-error {
+          td {
+            border-top: 2px solid $danger;
+            border-bottom: 2px solid $danger;
+            &:first-of-type {
+              border-left: 2px solid $danger;
+            }
+            &:last-of-type {
+              border-right: 2px solid $danger;
+            }
+          }
+        }
+        &.validation-warning {
+          td {
+            border-top: 2px solid $warning;
+            border-bottom: 2px solid $warning;
+            &:first-of-type {
+              border-left: 2px solid $warning;
+            }
+            &:last-of-type {
+              border-right: 2px solid $warning;
+            }
+          }
+        }
+      }
+    }
+  }
+  .mapping-validation-message-row {
+    // &:last-child {
+    //   td {
+    //     border-bottom-width: 2px;
+    //   }
+    // }
+    &.validation-error {
+      background-color: #ffc3cf;
+      color: $danger;
+      border-left: 2px solid $danger;
+      border-right: 2px solid $danger;
+    }
+    &.validation-warning {
+      background-color: #fff4cc;
+      color: #ccb045;
+      border-left: 2px solid $warning;
+      border-right: 2px solid $warning;
+    }
+    td {
+      font-size: 12px;
+      .validation-title {
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.react-toggle {
+  .react-toggle-track {
+    height: 26px
+  }
+  .react-toggle-thumb {
+    top: 2px;
   }
 }

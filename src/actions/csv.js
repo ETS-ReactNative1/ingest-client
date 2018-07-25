@@ -1,52 +1,9 @@
-import axios from 'axios';
 import Papa from 'papaparse';
-
-export function ingest(mappings, file) {
-  const data = new FormData();
-  data.append('mappings', JSON.stringify(mappings));
-  data.append('fileSize', file ? file.size : '');
-  data.append('csv', file);
-  return dispatch => {
-    dispatch(ingestRequestedAction());
-    return axios(process.env.REACT_APP_API_URL+'/ingest/csv', { //temp
-      method: "post",
-      data: data,
-      withCredentials: true,
-      timeout: 100000000
-    }).then((response) => {
-      dispatch(ingestFulfilledAction(response.data));
-      return response.data;
-    })
-    .catch((error) => {
-      dispatch(ingestRejectedAction(error.response.data));
-    });
-  }
-}
-
-function ingestRequestedAction() {
-  return {
-    type: 'INGEST_REQUESTED'
-  };
-}
-
-function ingestRejectedAction(error) {
-  return {
-    type: 'INGEST_REJECTED',
-    result: error
-  }
-}
-
-function ingestFulfilledAction(data) {
-  return {
-    type: 'INGEST_FULFILLED',
-    result: data
-  };
-}
 
 export function initial() {
   return {
     types: ['GET_INITIAL', 'GET_INITIAL_SUCCESS', 'GET_INITIAL_FAILURE'],
-    promise: client => client.get('/csv/initial')
+    promise: client => client.get('/fields')
   }
 }
 
@@ -59,6 +16,54 @@ export function pair(params) {
         destKey: params.destKey
       }
     });
+  }
+}
+
+export function fileUploadStarted() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_STARTED'
+    })
+  }
+}
+
+export function fileUploadSuccess() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_SUCCESS'
+    })
+  }
+}
+
+export function fileUploadFailure() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_FAILURE'
+    })
+  }
+}
+
+export function fileUploadPaused() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_PAUSED'
+    })
+  }
+}
+
+export function fileUploadCancelled() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_CANCELLED'
+    })
+  }
+}
+
+export function fileUploadResume() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'FILE_UPLOAD_RESUMED'
+    })
   }
 }
 
@@ -86,8 +91,7 @@ export function addText(params) {
   }
 }
 
-export function parseHeader(event) {
-  const file = event.target.files[0];
+export function parseHeader(file) {
   return dispatch => {
     dispatch(parseHeaderRequestedAction());
     Papa.parse(file, {
@@ -139,5 +143,34 @@ export function receiveCsvIngestUpdate() {
       types: ['a', 'b', null],
       promise: (socket) => socket.on('csvIngestUpdate', csvIngestUpdate),
     });
+  }
+}
+
+export function createIngestRecord(form) {
+  return {
+    type: 'validate',
+    data: form, //form validation middleware needs data in order to validate.
+    types: [ 'CREATE_INGEST_RECORD', 'CREATE_INGEST_RECORD_SUCCESS', 'CREATE_INGEST_RECORD_FAILURE'],
+    promise: client => client.post('/ingest/csv', {
+      data: form
+    })
+  }
+}
+
+export function scheduleIngestJob(ingestId) {
+  return {
+    types: [ 'SCHEDULE_INGEST', 'SCHEDULE_INGEST_SUCCESS', 'SCHEDULE_INGEST_FAILURE'],
+    promise: client => client.post(`/ingest/${ingestId}/schedule`, {
+      data: {
+        id: ingestId
+      }
+    })
+  }
+}
+
+export function csvValidationError(errors) {
+  return {
+    type: "CSV_VALIDATION_ERROR",
+    errors
   }
 }

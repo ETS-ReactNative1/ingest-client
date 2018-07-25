@@ -5,6 +5,7 @@ import { solrReducer } from './solr_reducer'
 import { authReducer } from './auth_reducer'
 import { loadReducer } from './load_reducer'
 import { socketReducer } from './socket_reducer'
+import { ingestReducer } from './ingest_reducer'
 
 const rootReducer = combineReducers({
   router: routerReducer,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   solr: solrReducer,
   socket: socketReducer,
   auth: authReducer,
-  load: loadReducer
+  load: loadReducer,
+  ingest: ingestReducer
 });
 
 export default rootReducer;

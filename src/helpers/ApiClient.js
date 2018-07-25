@@ -28,20 +28,11 @@ export default class clientAPI {
   }
 
   post(url, params) {
-    return axios({
-      method: 'post',
-      url: host + url,
+    return fetch(host + url, {
+      method: 'POST',
       headers: this.headers,
-      withCredentials: true,
-      timeout: 100000000,
-      data: params.data
+      credentials: 'include',
+      body: JSON.stringify(params.data)
     });
-    // return fetch(host + url, {
-    //   method: 'POST',
-    //   headers: this.headers,
-    //   credentials: 'include',
-    //   timeout: 100000000,
-    //   body: JSON.stringify(params.data)
-    // });
   }
 }
