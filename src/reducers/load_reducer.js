@@ -30,7 +30,7 @@ export function loadReducer(state = initialState, action = {}) {
       return {
         ...state,
         isActive: true,
-        message: 'Making websocket connection...'
+        message: `Making websocket connection...`
       };
     case 'SOCKET_CONNECT_SUCCESS':
       return {

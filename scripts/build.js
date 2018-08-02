@@ -14,6 +14,17 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 
+//override api endpoints based on build argument
+let argv = process.argv.slice(2);
+if (argv.indexOf('--env=emory-staging') > -1) {
+  process.env.REACT_APP_API_URL = "http://claritynlp.bmi.emory.edu:1340";
+  process.env.REACT_APP_API_HOST = "claritynlp.bmi.emory.edu:1340";
+}
+if (argv.indexOf('--env=gtri-production') > -1) {
+  process.env.REACT_APP_API_URL = "http://18.220.133.76:1340";
+  process.env.REACT_APP_API_HOST = "18.220.133.76:1340";
+}
+
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
