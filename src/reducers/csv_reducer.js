@@ -455,6 +455,111 @@ export function csvReducer(state = initialState, action = {}) {
         status: 'Problem uploading file.'
       }
     }
+    case 'TOGGLE_ADD_CUSTOM_FIELD_MODAL': {
+      return {
+        ...state,
+        addCustomFieldModalActive: action.result.action == 'open' ? true : false
+      }
+    }
+    case 'CREATE_CUSTOM_FIELD': {
+      return {
+        ...state
+      }
+    }
+    case 'CREATE_CUSTOM_FIELD_SUCCESS': {
+      const formErrorsMappings = Object.keys(action.result).reduce((obj, field) => {
+        obj[field] = null;
+        return obj;
+      }, {});
+      return {
+        ...state,
+        destination: {
+          ...state.destination,
+          ...action.result
+        },
+        destinationArr: [ //immutablely adding item to array
+          //ref: https://redux.js.org/recipes/structuringreducers/immutableupdatepatterns
+          ...state.destinationArr.slice(0, state.destinationArr.length),
+          Object.keys(action.result).reduce((obj, field) => {
+            return {
+              ...action.result[field],
+              key: field
+            }
+            return obj;
+          }, {}),
+          ...state.destinationArr.slice(state.destinationArr.length)
+        ],
+        form: {
+          ...state.form,
+          mappings: {
+            ...state.form.mappings,
+            ...action.result
+          },
+          errors: {
+            ...state.form.errors,
+            ...formErrorsMappings
+          }
+        }
+      }
+    }
+    case 'CREATE_CUSTOM_FIELD_FAILURE': {
+      return {
+        ...state
+      }
+    }
+    case 'DELETE_CUSTOM_FIELD': {
+      return {
+        ...state
+      }
+    }
+    case 'DELETE_CUSTOM_FIELD_SUCCESS': {
+      const formErrorsMappings = Object.keys(state.form.errors).reduce((obj, field) => {
+        if (field === action.result.field ) {
+          return obj;
+        }
+        obj[field] = state.form.errors[field];
+        return obj;
+      }, {});
+      const destination = Object.keys(state.destination).reduce((obj, field) => {
+        if (field === action.result.field) {
+          return obj;
+        }
+        obj[field] = state.destination[field];
+        return obj;
+      }, {});
+
+      let destArrIndex;
+      state.destinationArr.forEach((item, index) => {
+        console.log(action.result.field);
+        if (item.key === action.result.field) {
+          return destArrIndex = index;
+        }
+      });
+      return {
+        ...state,
+        destination: {
+          ...destination
+        },
+        destinationArr: [
+          ...state.destinationArr.slice(0, destArrIndex),
+          ...state.destinationArr.slice(destArrIndex + 1)
+        ],
+        form: {
+          ...state.form,
+          mappings: {
+            ...destination
+          },
+          errors: {
+            ...formErrorsMappings
+          }
+        }
+      }
+    }
+    case 'DELETE_CUSTOM_FIELD_FAILURE': {
+      return {
+        ...state
+      }
+    }
     default:
       return state;
   }

@@ -19,6 +19,9 @@
   .solr-field-name {
     vertical-align: middle;
   }
+  .delete-field {
+    vertical-align: middle;
+  }
 }
 
 // .right-panel {
@@ -114,5 +117,14 @@
   }
   .react-toggle-thumb {
     top: 2px;
+  }
+}
+
+.add-custom-field-button {
+  font-size: 12px;
+  color: #757575;
+  text-decoration: underline;
+  &:hover {
+    color: #616161;
   }
 }

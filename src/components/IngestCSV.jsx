@@ -16,7 +16,16 @@ export default class IngestCSV extends Component {
       progressBarInt: 0,
       messageStatus: '',
       fileList: {files: []},
-      isPaused: false
+      isPaused: false,
+      customFieldForm: {
+        friendlyName: '',
+        keyName: '',
+        suffix: '_attr',
+        inputType: 'select',
+        lockInput: 'no',
+        requiredType: 'none',
+        validationMessage: ''
+      }
     };
   }
 
@@ -95,10 +104,6 @@ export default class IngestCSV extends Component {
     const value = target.value;
     const name = target.name;
 
-    // this.setState({
-    //   [name]: value
-    // });
-
     return this.props.addText({
       destKey: name,
       value: value
@@ -134,6 +139,34 @@ export default class IngestCSV extends Component {
   handleCancelFileUpload = () => {
     this.resumable.cancel();
     this.props.fileUploadCancelled();
+  }
+
+  handleToggleAddCustomFieldModal = (action) => {
+    return this.props.toggleAddCustomFieldModal(action);
+  }
+
+  handleCustomFieldFormInputChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    this.setState({
+      customFieldForm: {
+        ...this.state.customFieldForm,
+        [name]: value
+      }
+    });
+  }
+
+  handleDeleteCustomField = (fieldId, isDefaultField) => {
+    if (!isDefaultField) { //since `disabled` input still propagating onClick event
+      return this.props.deleteCustomField(fieldId);
+    }
+  }
+
+  handleSaveCustomField = (form) => {
+    return this.props.saveCustomField(form)
+      .then(() => this.props.toggleAddCustomFieldModal('close'))
   }
 
   render() {
@@ -215,12 +248,13 @@ export default class IngestCSV extends Component {
               </div>
               <div className="table-reset">
                 <div className="field-mapping">
-                  <table className="table is-fullwidth">
+                  <table className="table is-fullwidth is-bordered">
                     <thead>
                       <tr>
                         <th>SOLR FIELDS</th>
                         <th>SOURCE FIELDS</th>
                         <th>Use CSV?</th>
+                        <th>Delete?</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -259,12 +293,22 @@ export default class IngestCSV extends Component {
                                 checked={dest.type == 'text' ? false : true}
                                 onChange={(e) => this.handleToggled(e)}
                                 name={dest.key}
+                                disabled={dest.inputTypeLocked}
                               />
+                            </td>
+                            <td className="delete-field">
+                              <a
+                                className={`button is-small ${dest.isCustom ? 'is-danger' : ''}`}
+                                onClick={() => this.handleDeleteCustomField(dest.key, !dest.isCustom)}
+                                disabled={!dest.isCustom}
+                              >
+                                <i className="fas fa-times"></i>
+                              </a>
                             </td>
                           </tr>
                           { this.props.csv.form.errors[dest.key] &&
                           <tr className={`mapping-validation-message-row ${ dest.requiredType == 'hard' ? 'validation-error' : 'validation-warning'}`}>
-                            <td colSpan="3"><span className="validation-title">{`${dest.name} ${dest.requiredType == 'hard' ? 'Error' : 'Warning'}`}:&nbsp;</span><span>{dest.validationMessage}</span></td>
+                            <td colSpan="4"><span className="validation-title">{`${dest.name} ${dest.requiredType == 'hard' ? 'Error' : 'Warning'}`}:&nbsp;</span><span>{dest.validationMessage}</span></td>
                           </tr>
                           }
                         </React.Fragment>
@@ -273,6 +317,7 @@ export default class IngestCSV extends Component {
                     </tbody>
                   </table>
                 </div>
+                <a className="add-custom-field-button" onClick={() => this.handleToggleAddCustomFieldModal('open')}>Add Custom Field</a>
               </div>
               <div className="start-ingest">
                 <a className={`button is-link ${isSubmitInProgress ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest()} disabled={isSubmitInProgress ? true : false}>{isSubmitInProgress ? 'Ingesting...' : 'Start Ingest'}</a>
@@ -305,6 +350,199 @@ export default class IngestCSV extends Component {
               </tbody>
             </table>
           }
+        </div>
+        {/* ADD CUSTOM FIELD MODAL */}
+        <div className={`modal ${this.props.csv.addCustomFieldModalActive ? 'is-active' : ''}`}>
+          <div className="modal-background"></div>
+          <div className="modal-card">
+            <header className="modal-card-head">
+              <p className="modal-card-title">Add Custom Field</p>
+              <button className="delete" onClick={() => this.handleToggleAddCustomFieldModal('close')} aria-label="close"></button>
+            </header>
+            <section className="modal-card-body">
+              {/* FRIENDLY NAME */}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Friendly name</label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="e.g. Report Metadata"
+                        value={this.state.customFieldForm.friendlyName}
+                        name="friendlyName"
+                        onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                      />
+                    </div>
+                    <p className="help">
+                      The name shown in the <b>SOLR FIELDS</b> column.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* SOLR DOCUMENT KEY */}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Solr key</label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <div className="control">
+                      <input
+                        className="input"
+                        type="text"
+                        placeholder="e.g. report_metadata"
+                        value={this.state.customFieldForm.keyName}
+                        name="keyName"
+                        onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                      />
+                    </div>
+                    <p className="help">
+                      The key name in the Solr
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* SOLR KEY SUFFIX*/}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Suffix</label>
+                </div>
+                <div className="field-body">
+                  <div className="field is-narrow">
+                    <div className="control">
+                      <div className="select is-fullwidth">
+                        <select
+                          value={this.state.customFieldForm.suffix}
+                          name="suffix"
+                          onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                        >
+                          <option value="_attr">_attr</option>
+                          <option value="_attrs">_attrs</option>
+                          <option value="_id">_id</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="help">
+                      The dynamic suffix applied to the solr key. E.g. report_metadata_attr
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* INPUT TYPE*/}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Input type</label>
+                </div>
+                <div className="field-body">
+                  <div className="field is-narrow">
+                    <div className="control">
+                      <div className="select is-fullwidth">
+                        <select
+                          value={this.state.customFieldForm.inputType}
+                          name="inputType"
+                          onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                        >
+                          <option value="select">From File</option>
+                          <option value="text">Manual</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="help">
+                      Whether the field will be a select dropdown of text input (manual) field.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* LOCK INPUT TYPE*/}
+              <div className="field is-horizontal">
+                <div className="field-label">
+                  <label className="label">Lock Input Type?</label>
+                </div>
+                <div className="field-body">
+                  <div className="field is-narrow">
+                    <div className="control">
+                      <div className="select is-fullwidth">
+                        <select
+                          value={this.state.customFieldForm.lockInput}
+                          name="lockInput"
+                          onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                        >
+                          <option value="no">No</option>
+                          <option value="yes">Yes</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="help">
+                      Allow the input type to be toggled.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* REQUIRED TYPE */}
+              <div className="field is-horizontal">
+                <div className="field-label">
+                  <label className="label">Required Type</label>
+                </div>
+                <div className="field-body">
+                  <div className="field is-narrow">
+                    <div className="control">
+                      <div className="select is-fullwidth">
+                        <select
+                          value={this.state.customFieldForm.requiredType}
+                          name="requiredType"
+                          onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                        >
+                          <option value="none">None</option>
+                          <option value="soft">Soft (Warning)</option>
+                          <option value="hard">Hard (Error)</option>
+                        </select>
+                      </div>
+                    </div>
+                    <p className="help">
+                      Does not filling out the field trigger a warning/error?
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* VALIDATION MESSAGE */}
+              <div className="field is-horizontal">
+                <div className="field-label is-normal">
+                  <label className="label">Validation Message</label>
+                </div>
+                <div className="field-body">
+                  <div className="field">
+                    <div className="control">
+                      <textarea
+                        className="textarea"
+                        placeholder="e.g. The Report Metadata is required in order to start an ingestion job."
+                        name="validationMessage"
+                        value={this.state.customFieldForm.validationMessage}
+                        onChange={(e) => this.handleCustomFieldFormInputChange(e)}
+                      >
+                      </textarea>
+                    </div>
+                    <p className="help">
+                      The validation message to display when a warning/error is triggered.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <footer className="modal-card-foot">
+              <button className="button is-success" onClick={() => this.handleSaveCustomField(this.state.customFieldForm)}>Save changes</button>
+              <button className="button" onClick={() => this.handleToggleAddCustomFieldModal('close')}>Cancel</button>
+            </footer>
+          </div>
         </div>
       </div>
     )

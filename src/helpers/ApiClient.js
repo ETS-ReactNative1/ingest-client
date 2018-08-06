@@ -35,4 +35,13 @@ export default class clientAPI {
       body: JSON.stringify(params.data)
     });
   }
+
+  delete(url, params) {
+    return fetch(host + url, {
+      method: 'DELETE',
+      headers: this.headers,
+      credentials: 'include',
+      body: JSON.stringify(params.data)
+    })
+  }
 }

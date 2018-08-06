@@ -12,6 +12,18 @@ export function deleteIngestRecord(ingestId) {
   }
 }
 
+export function toggleDeleteIngestModal(ingestId, action) {
+  return (dispatch) => {
+    return dispatch({
+      type: 'TOGGLE_DELETE_INGEST_MODAL',
+      result: {
+        id: ingestId,
+        action: action
+      }
+    });
+  }
+}
+
 export function receiveIngestRecordStatusUpdate() {
   return (dispatch) => {
     const ingestRecordStatusUpdate = (update) => {

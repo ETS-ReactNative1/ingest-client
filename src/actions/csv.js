@@ -174,3 +174,32 @@ export function csvValidationError(errors) {
     errors
   }
 }
+
+export function toggleAddCustomFieldModal(action) {
+  return (dispatch) => {
+    return dispatch({
+      type: 'TOGGLE_ADD_CUSTOM_FIELD_MODAL',
+      result: {
+        action: action
+      }
+    });
+  }
+}
+
+export function saveCustomField(form) {
+  return {
+    types: [ 'CREATE_CUSTOM_FIELD', 'CREATE_CUSTOM_FIELD_SUCCESS', 'CREATE_CUSTOM_FIELD_FAILURE'],
+    promise: client => client.post('/fields', {
+      data: form
+    })
+  }
+}
+
+export function deleteCustomField(field) {
+  return {
+    types: [ 'DELETE_CUSTOM_FIELD', 'DELETE_CUSTOM_FIELD_SUCCESS', 'DELETE_CUSTOM_FIELD_FAILURE'],
+    promise: client => client.delete(`/fields/${field}`, {
+      data: {}
+    })
+  }
+}

@@ -73,6 +73,28 @@ export function ingestReducer(state = initialState, action = {}) {
         ...state
       }
     }
+    case 'TOGGLE_DELETE_INGEST_MODAL': {
+      const itemsArr = state.itemsArr.map(item => {
+        if (item.id === action.result.id) {
+          return {
+            ...item,
+            confirmDeleteModalOpen: action.result.action == 'open' ? true : false
+          }
+        }
+        return item;
+      });
+      return {
+        ...state,
+        items: {
+          ...state.items,
+          [action.result.id]: {
+            ...state.items[action.result.id],
+            confirmDeleteModalOpen: action.result.action == 'open' ? true : false
+          }
+        },
+        itemsArr: itemsArr
+      }
+    }
     case 'RECEIVE_INGEST_RECORD_STATUS_UPDATE': {
       //if item is in UI table currently
       if (action.result.id in state.items) {

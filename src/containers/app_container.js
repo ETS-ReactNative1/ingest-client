@@ -9,6 +9,7 @@ import {
 import {
   getIngestPage,
   deleteIngestRecord,
+  toggleDeleteIngestModal,
   receiveIngestRecordStatusUpdate
  } from '../actions/ingest'
 
@@ -26,6 +27,7 @@ const appContainer = connect(mapStateToProps, {
   receiveNumDocs,
   getIngestPage,
   deleteIngestRecord,
+  toggleDeleteIngestModal,
   receiveIngestRecordStatusUpdate
 })(App);
 

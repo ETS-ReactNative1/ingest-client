@@ -14,7 +14,10 @@ import {
   fileUploadFailure,
   fileUploadPaused,
   fileUploadCancelled,
-  fileUploadResume
+  fileUploadResume,
+  toggleAddCustomFieldModal,
+  saveCustomField,
+  deleteCustomField
 } from '../actions/csv'
 
 function mapStateToProps(state) {
@@ -38,7 +41,10 @@ const ingestCSVContainer = connect(mapStateToProps, {
   fileUploadFailure,
   fileUploadPaused,
   fileUploadCancelled,
-  fileUploadResume
+  fileUploadResume,
+  toggleAddCustomFieldModal,
+  saveCustomField,
+  deleteCustomField
 })(IngestCSV);
 
 export default ingestCSVContainer;

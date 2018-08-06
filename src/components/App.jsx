@@ -27,6 +27,14 @@ export default class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      isUploading: false,
+      progressBar: 0,
+      progressBarInt: 0,
+      messageStatus: '',
+      fileList: {files: []},
+      isPaused: false
+    };
   }
 
   componentWillMount() {
@@ -55,7 +63,12 @@ export default class App extends Component {
   }
 
   handleDeleteIngestRecord = (ingestId) => {
+    this.handleToggleDeleteIngestModal(ingestId, 'close');
     return this.props.deleteIngestRecord(ingestId);
+  }
+
+  handleToggleDeleteIngestModal = (ingestId, action) => {
+    return this.props.toggleDeleteIngestModal(ingestId, action);
   }
 
   render() {
@@ -127,10 +140,28 @@ export default class App extends Component {
                         { item.status !== 'deleted' &&
                           <a
                             className="button is-small"
-                            onClick={() => this.handleDeleteIngestRecord(item.id)}
+                            onClick={() => this.handleToggleDeleteIngestModal(item.id, 'open')}
+                            disabled={item.confirmDeleteModalOpen}
                           >
                             <i className="fas fa-times"></i>
                           </a>
+                        }
+                        { item.confirmDeleteModalOpen &&
+                          <div className="delete-modal">
+                            <span>Are you sure?</span>
+                            <a
+                              className="button is-small is-danger delete-action"
+                              onClick={() => this.handleDeleteIngestRecord(item.id)}
+                            >
+                            Delete
+                            </a>
+                            <a
+                              className="button is-small cancel-action"
+                              onClick={() => this.handleToggleDeleteIngestModal(item.id, 'close')}
+                            >
+                            Cancel
+                            </a>
+                          </div>
                         }
                       </td>
                     </tr>
