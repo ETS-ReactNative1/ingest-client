@@ -85,10 +85,6 @@ export default class IngestCSV extends Component {
       .then(() => this.props.receiveCsvIngestUpdate())
   }
 
-  handleUploadFile = (event) => {
-    return this.props.parseHeader(event)
-  }
-
   handleToggled = (event) => {
     const target = event.target;
     const value = target.checked;

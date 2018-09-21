@@ -13,5 +13,8 @@ ADD package.json /usr/src/app/package.json
 RUN npm install
 RUN npm install react-scripts@1.1.0 -g --silent
 
-# start app
-CMD ["npm", "start"]
+EXPOSE 8500
+EXPOSE 35729
+
+ENTRYPOINT ["/bin/bash", "/usr/src/app/run.sh"]
+CMD ["start"]
