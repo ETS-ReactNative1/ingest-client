@@ -281,7 +281,8 @@ export function csvReducer(state = initialState, action = {}) {
         form: {
           ...state.form,
           errors: action.errors
-        }
+        },
+        status: null
       }
     }
     case 'CREATE_INGEST_RECORD': {
@@ -558,6 +559,62 @@ export function csvReducer(state = initialState, action = {}) {
     case 'DELETE_CUSTOM_FIELD_FAILURE': {
       return {
         ...state
+      }
+    }
+    case 'RESET': {
+      return {
+        ...state,
+        isSubmitInProgress: false,
+        isSubmitSuccessful: false,
+        isSubmitErroneous: false,
+        isFileUploading: false,
+        isFilePaused: false,
+        isFileUploaded: false,
+        isFileUploadError: false,
+        isScheduling: false,
+        isScheduled: false,
+        isScheduleError: false,
+        isParsing: null,
+        parseAttempted: false,
+        parseError: null,
+        loaded: true,
+        source: {},
+        sourceArr: [],
+        availableSources: [],
+        isIngesting: false,
+        isIngestError: false,
+        // status: null,
+        ingestId: null,
+        destination: Object.keys(state.destination).reduce((dest, key) => {
+          dest[key] = {
+            ...state.destination[key],
+            value: null,
+            sourceField: null
+          }
+          return dest;
+        }, {}),
+        destinationArr: state.destinationArr.map((dest) => {
+          return {
+            ...dest,
+            value: null,
+            sourceField: null
+          }
+        }),
+        form: {
+          ...state.form,
+          file: {
+            ...state.form.file,
+            value: null
+          },
+          mappings: Object.keys(state.destination).reduce((dest, key) => {
+            dest[key] = {
+              ...state.destination[key],
+              value: null,
+              sourceField: null
+            }
+            return dest;
+          }, {})
+        }
       }
     }
     default:
