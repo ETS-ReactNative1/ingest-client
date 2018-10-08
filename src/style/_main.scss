@@ -1,5 +1,17 @@
 .start-ingest {
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  .start-ingest-warning-count {
+    color: #ccb045;
+    text-decoration: underline;
+    margin-left: 10px;
+  }
+  .start-ingest-error-count {
+    color: #ff3860;
+    text-decoration: underline;
+    margin-left: 10px;
+  }
 }
 
 .file-meta {
@@ -59,25 +71,25 @@
       .mapping-main-row {
         &.validation-error {
           td {
-            border-top: 2px solid $danger;
-            border-bottom: 2px solid $danger;
+            // border-top: 2px solid $danger;
+            // border-bottom: 2px solid $danger;
             &:first-of-type {
-              border-left: 2px solid $danger;
+              // border-left: 2px solid $danger;
             }
             &:last-of-type {
-              border-right: 2px solid $danger;
+              // border-right: 2px solid $danger;
             }
           }
         }
         &.validation-warning {
           td {
-            border-top: 2px solid $warning;
-            border-bottom: 2px solid $warning;
+            // border-top: 2px solid $warning;
+            // border-bottom: 2px solid $warning;
             &:first-of-type {
-              border-left: 2px solid $warning;
+              // border-left: 2px solid $warning;
             }
             &:last-of-type {
-              border-right: 2px solid $warning;
+              // border-right: 2px solid $warning;
             }
           }
         }
@@ -93,14 +105,14 @@
     &.validation-error {
       background-color: #ffc3cf;
       color: $danger;
-      border-left: 2px solid $danger;
-      border-right: 2px solid $danger;
+      // border-left: 2px solid $danger;
+      // border-right: 2px solid $danger;
     }
     &.validation-warning {
       background-color: #fff4cc;
       color: #ccb045;
-      border-left: 2px solid $warning;
-      border-right: 2px solid $warning;
+      // border-left: 2px solid $warning;
+      // border-right: 2px solid $warning;
     }
     td {
       font-size: 12px;
@@ -113,10 +125,20 @@
 
 .react-toggle {
   .react-toggle-track {
-    height: 26px
+    height: 26px;
   }
   .react-toggle-thumb {
     top: 2px;
+  }
+  &.react-toggle--checked {
+    .react-toggle-track {
+      background-color: $success;
+    }
+    &:hover:not(.react-toggle--disabled) {
+      .react-toggle-track {
+        background-color: #21c45a;
+      }
+    }
   }
 }
 
@@ -127,4 +149,8 @@
   &:hover {
     color: #616161;
   }
+}
+
+.empty-ingest-record-notification {
+  background-color: #FAFAFA;
 }
