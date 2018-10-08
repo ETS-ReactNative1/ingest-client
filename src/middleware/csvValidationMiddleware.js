@@ -7,8 +7,28 @@ const formValidationMiddleware = ({ dispatch, getState}) => next => action => {
     return next(action)
   }
   const { data: csv } = action;
+  // console.log('csv: ',csv);
   let errors = csvValidationErrors(csv)
-  if (!csvIsValid(errors)) {
+  // console.log('errors: ',errors);
+
+  const inputs = {
+    file: {
+      ...csv.file
+    },
+    ...csv.mappings
+  };
+
+  const counts = Object.keys(inputs).reduce((counts, key) => {
+    // const errors = this.props.csv.form.errors;
+    const requiredType = inputs[key].requiredType;
+    counts[requiredType] = errors[key] ? counts[requiredType] + 1 : counts[requiredType];
+    return counts;
+  }, { hard: 0, soft: 0});
+
+  console.log('counts: ',counts);
+
+  // if (!csvIsValid(errors)) {
+  if (counts.hard > 0) {
     dispatch(csvValidationError(errors))
     //return promise to chain in calling func.
     return new Promise(function(resolve, reject) {
