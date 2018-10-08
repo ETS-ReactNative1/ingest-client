@@ -121,6 +121,8 @@ export default class App extends Component {
             </section>
             <section>
               <h6 className="left-panel-title title is-6">Ingest Records</h6>
+              { this.props.ingest.itemsArr.length > 0 &&
+              <React.Fragment>
               <table id="ingest-table" className="table is-fullwidth">
                 <thead>
                   <tr className="ingest-meta-head">
@@ -184,6 +186,13 @@ export default class App extends Component {
                   Next
                 </a>
               </nav>
+              </React.Fragment>
+              }
+              { this.props.ingest.itemsArr.length == 0 &&
+                <div class="notification empty-ingest-record-notification">
+                  No ingest records found.
+                </div>
+              }
             </section>
           </div>
           <div className="right-panel">
