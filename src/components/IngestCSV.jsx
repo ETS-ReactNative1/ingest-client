@@ -52,7 +52,9 @@ export default class IngestCSV extends Component {
     ResumableField.on('fileSuccess', (file, message) => {
       //dispatch action saying file has been uploaded...
       this.props.fileUploadSuccess();
-      return this.props.scheduleIngestJob(this.props.csv.ingestId)
+      this.props.scheduleIngestJob(this.props.csv.ingestId);
+      this.resumable.cancel();
+      return this.props.reset();
     });
 
     ResumableField.on('fileProgress', file => {
@@ -113,7 +115,10 @@ export default class IngestCSV extends Component {
     });
   }
 
-  handleStartIngest = () => {
+  handleStartIngest = (isSubmitInProgress, numErrors) => {
+    if (isSubmitInProgress || numErrors > 0) { //prevent submission
+      return;
+    }
     return this.props.createIngestRecord(this.props.csv.form)
       .then(() => this.resumable.upload())
       .then(() => this.props.fileUploadStarted())
@@ -180,17 +185,31 @@ export default class IngestCSV extends Component {
                           <i className="fas fa-times"></i>
                         </span>;
 
-    function validationClass(requiredType, isError) {
+    function validationClass(requiredType, isError, forInput) {
       if (isError) {
         if (requiredType === 'hard') {
-          return 'validation-error';
+          return !forInput ? 'validation-error' : 'is-danger';
         } else {
-          return 'validation-warning';
+          return !forInput ? 'validation-warning' : 'is-warning';
         }
       } else {
         return '';
       }
     }
+
+    const inputs = {
+      file: {
+        ...this.props.csv.form.file
+      },
+      ...this.props.csv.form.mappings
+    };
+
+    const counts = Object.keys(inputs).reduce((counts, key) => {
+      const errors = this.props.csv.form.errors;
+      const requiredType = inputs[key].requiredType;
+      counts[requiredType] = errors[key] ? counts[requiredType] + 1 : counts[requiredType];
+      return counts;
+    }, { hard: 0, soft: 0});
 
     return (
       <div className="csv-ingest">
@@ -260,13 +279,13 @@ export default class IngestCSV extends Component {
                             <td className="solr-field-name">{dest.name}</td>
                             { dest.type == 'select' &&
                               <td>
-                                <div className="select">
+                                <div className={`select ${validationClass(dest.requiredType, this.props.csv.form.errors[dest.key], true)}`}>
                                   <select
                                     onChange={(e) => this.handlePair(dest.key, e)}
                                     name="sourceField"
                                     defaultValue="default"
                                   >
-                                    <option value="default" disabled="disabled">Select Source Field</option>
+                                    <option value="default">Select Source Field</option>
                                     {this.props.csv.sourceArr.map(x => <option value={x.key} key={x.key}>{x.name}</option>)}
                                   </select>
                                 </div>
@@ -275,7 +294,7 @@ export default class IngestCSV extends Component {
                             { dest.type == 'text' &&
                               <td>
                                 <input
-                                  className="input"
+                                  className={`input ${validationClass(dest.requiredType, this.props.csv.form.errors[dest.key], true)}`}
                                   type="text"
                                   name={dest.key}
                                   value={dest.value ? dest.value : ''}
@@ -316,7 +335,13 @@ export default class IngestCSV extends Component {
                 <a className="add-custom-field-button" onClick={() => this.handleToggleAddCustomFieldModal('open')}>Add Custom Field</a>
               </div>
               <div className="start-ingest">
-                <a className={`button is-link ${isSubmitInProgress ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest()} disabled={isSubmitInProgress ? true : false}>{isSubmitInProgress ? 'Ingesting...' : 'Start Ingest'}</a>
+                <a className={`button is-link ${isSubmitInProgress ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest(isSubmitInProgress, counts.hard)} disabled={(isSubmitInProgress ? true : false) || counts.hard > 0}>{isSubmitInProgress ? 'Ingesting...' : 'Start Ingest'}</a>
+                { counts.soft > 0 &&
+                  <span className="start-ingest-warning-count">Warning Count: {counts.soft}</span>
+                }
+                { counts.hard > 0 &&
+                  <span className="start-ingest-error-count">Error Count: {counts.hard}</span>
+                }
               </div>
               { this.props.csv.status &&
                 <div className="status">Status: {this.props.csv.status}</div>
@@ -325,7 +350,7 @@ export default class IngestCSV extends Component {
           </div>
         </section>
         <div className="file-upload-progress-bar">
-          { (this.props.csv.isSubmitInProgress || this.props.csv.isSubmitSuccessful) &&
+          { (this.props.csv.isSubmitInProgress) &&
             <table className="table is-fullwidth is-bordered is-narrow">
               <tbody>
                 <tr>
