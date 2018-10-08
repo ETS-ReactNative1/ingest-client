@@ -6,7 +6,8 @@ const initialState = {
   itemsArr: [],
   isPrevDisabled: true,
   isNextDisabled: true,
-  currentPage: 0
+  currentPage: 0,
+  pageSize: 5 //api can override
 };
 export function ingestReducer(state = initialState, action = {}) {
   switch(action.type) {
@@ -30,7 +31,8 @@ export function ingestReducer(state = initialState, action = {}) {
         itemsArr: action.result.records,
         items: items,
         isNextDisabled: action.result.isNextDisabled ? true : false,
-        currentPage: action.result.page
+        currentPage: action.result.page,
+        pageSize: action.result.pageSize
       }
     }
     case 'GET_INGEST_PAGE_FAILURE': {
@@ -123,7 +125,9 @@ export function ingestReducer(state = initialState, action = {}) {
       if (!(action.result.id in state.items) && state.currentPage === 0) {
         let newItemsArr = state.itemsArr;
         newItemsArr.unshift(action.result);
-        newItemsArr.pop();
+        if (newItemsArr.length > state.pageSize) {
+          newItemsArr.pop();
+        }
         return {
           ...state,
           items: {
@@ -136,7 +140,6 @@ export function ingestReducer(state = initialState, action = {}) {
       return {
         ...state
       }
-
     }
     default:
       return state;
