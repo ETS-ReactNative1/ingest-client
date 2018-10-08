@@ -91,6 +91,14 @@ export function addText(params) {
   }
 }
 
+export function reset() {
+  return (dispatch) => {
+    return dispatch({
+      type: 'RESET'
+    });
+  }
+}
+
 export function parseHeader(file) {
   return dispatch => {
     dispatch(parseHeaderRequestedAction());
