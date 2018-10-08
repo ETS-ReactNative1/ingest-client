@@ -17,7 +17,8 @@ import {
   fileUploadResume,
   toggleAddCustomFieldModal,
   saveCustomField,
-  deleteCustomField
+  deleteCustomField,
+  reset
 } from '../actions/csv'
 
 function mapStateToProps(state) {
@@ -44,7 +45,8 @@ const ingestCSVContainer = connect(mapStateToProps, {
   fileUploadResume,
   toggleAddCustomFieldModal,
   saveCustomField,
-  deleteCustomField
+  deleteCustomField,
+  reset
 })(IngestCSV);
 
 export default ingestCSVContainer;
