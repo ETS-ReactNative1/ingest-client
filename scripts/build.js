@@ -25,6 +25,11 @@ if (argv.indexOf('--env=gtri-production') > -1) {
   process.env.REACT_APP_API_HOST = "18.220.133.76:1340";
 }
 
+if (argv.indexOf('--env=gtri-optimized') > -1) {
+  process.env.REACT_APP_API_URL = "http://3.16.75.68:1340";
+  process.env.REACT_APP_API_HOST = "3.16.75.68:1340";
+}
+
 const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
