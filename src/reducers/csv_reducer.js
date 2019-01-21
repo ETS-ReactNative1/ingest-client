@@ -531,7 +531,6 @@ export function csvReducer(state = initialState, action = {}) {
 
       let destArrIndex;
       state.destinationArr.forEach((item, index) => {
-        console.log(action.result.field);
         if (item.key === action.result.field) {
           return destArrIndex = index;
         }

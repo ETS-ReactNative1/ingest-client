@@ -83,8 +83,8 @@ export default class IngestCSV extends Component {
 
     this.resumable = ResumableField;
 
-    return this.props.getInitial()
-      .then(() => this.props.receiveCsvIngestUpdate())
+    // return this.props.getInitial()
+    //   .then(() => this.props.receiveCsvIngestUpdate())
   }
 
   handleToggled = (event) => {
@@ -335,7 +335,7 @@ export default class IngestCSV extends Component {
                 <a className="add-custom-field-button" onClick={() => this.handleToggleAddCustomFieldModal('open')}>Add Custom Field</a>
               </div>
               <div className="start-ingest">
-                <a className={`button is-link ${isSubmitInProgress ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest(isSubmitInProgress, counts.hard)} disabled={(isSubmitInProgress ? true : false) || counts.hard > 0}>{isSubmitInProgress ? 'Ingesting...' : 'Start Ingest'}</a>
+                <a className={`button is-primary ${isSubmitInProgress ? 'is-loading' : ''}`} onClick={() => this.handleStartIngest(isSubmitInProgress, counts.hard)} disabled={(isSubmitInProgress ? true : false) || counts.hard > 0}>{isSubmitInProgress ? 'Ingesting...' : 'Start Ingest'}</a>
                 { counts.soft > 0 &&
                   <span className="start-ingest-warning-count">Warning Count: {counts.soft}</span>
                 }

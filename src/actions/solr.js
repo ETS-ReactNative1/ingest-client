@@ -1,7 +1,12 @@
-export function getCoreName() {
+export function getCoreName() { //using redux axios middleware
   return {
-    types: ['GET_CORE_NAME', 'GET_CORE_NAME_SUCCESS', 'GET_CORE_NAME_FAILURE'],
-    promise: client => client.get('/solr/core')
+    types: [ 'GET_CORE_NAME', 'GET_CORE_NAME_SUCCESS', 'GET_CORE_NAME_FAILURE'],
+    payload: {
+      request: {
+        method: 'get',
+        url: `/solr/core`
+      }
+    }
   }
 }
 

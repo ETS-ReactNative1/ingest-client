@@ -15,7 +15,8 @@ function mapStateToProps(state) {
     router: state.router,
     auth: state.auth,
     socket: state.socket,
-    load: state.load
+    load: state.load,
+    oidc: state.oidc
   };
 }
 
