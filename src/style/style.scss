@@ -1,9 +1,15 @@
 @import "util/reset";
 @import "util/normalize";
 
+// Set ClarityNLP brand colors
+$purple: #79589f;
+
+// Update Bulma's global variables
+$primary: $purple;
+$link: $purple;
+
 @import "../../node_modules/bulma/bulma.sass";
 
-@import "elements/navbar";
 @import "elements/load";
 @import "elements/main";
 @import "elements/csv";
@@ -11,3 +17,4 @@
 @import "elements/delete-modal";
 
 @import "main";
+@import "../components/Navbar/navbar";
