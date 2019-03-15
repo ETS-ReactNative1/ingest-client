@@ -1,12 +1,20 @@
 import React, { Component } from "react";
-import { FaCubes, FaPoll, FaFolder, FaChartBar, FaCog } from "react-icons/fa";
+import {
+    FaCubes,
+    FaPoll,
+    FaFolder,
+    FaChartBar,
+    FaCog,
+    FaBookOpen
+} from "react-icons/fa";
 
 export default class Navbar extends Component {
     render() {
         const {
             REACT_APP_DASHBOARD_URL,
             REACT_APP_RESULT_VIEWER_URL,
-            REACT_APP_QUERY_BUILDER_URL
+            REACT_APP_QUERY_BUILDER_URL,
+            REACT_APP_DOCUMETATION_URL
         } = process.env;
 
         return (
@@ -65,6 +73,15 @@ export default class Navbar extends Component {
                                 <FaChartBar />
                             </span>
                             Results
+                        </a>
+                        <a
+                            href={REACT_APP_DOCUMETATION_URL}
+                            className="nav-link has-text-centered"
+                        >
+                            <span className="link-icon is-size-4">
+                                <FaBookOpen />
+                            </span>
+                            Documentation
                         </a>
                     </div>
                 </nav>
