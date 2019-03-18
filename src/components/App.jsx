@@ -48,7 +48,7 @@ export default class App extends Component {
       'tolerance': 70
     });
     return this.props.getCoreName()
-    //   .then(() => this.props.getNumDocs())
+      .then(() => this.props.getNumDocs()) //TODO re-enable websocket methods
     //   .then(() => this.props.receiveNumDocs())
     //   .then(() => this.props.getIngestPage())
     //   .then(() => this.props.receiveIngestRecordStatusUpdate())
