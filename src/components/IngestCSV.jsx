@@ -5,6 +5,7 @@ import Toggle from 'react-toggle'
 import "react-toggle/style.css" // for ES6 modules
 import Resumable from 'resumablejs'
 import $ from "jquery";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default class IngestCSV extends Component {
 
@@ -83,7 +84,7 @@ export default class IngestCSV extends Component {
 
     this.resumable = ResumableField;
 
-    // return this.props.getInitial()
+    return this.props.getInitial()
     //   .then(() => this.props.receiveCsvIngestUpdate())
   }
 
@@ -174,15 +175,15 @@ export default class IngestCSV extends Component {
     const isSubmitInProgress = this.props.csv.isSubmitInProgress;
 
     const startButton = <span disabled={this.props.csv.isFileUploading || this.props.csv.isFileUploaded} className="button is-info is-outline" onClick={() => this.handleResumeFileUpload()}>
-                          <i className="fas fa-play"></i>
+                          <FontAwesomeIcon icon="play"/>
                         </span>;
 
     const pauseButton = <span disabled={!this.props.csv.isFileUploading || this.props.csv.isFileUploaded} className="button is-info is-outline" onClick={() => this.handlePauseFileUpload()}>
-                          <i className="fas fa-pause"></i>
+                          <FontAwesomeIcon icon="pause"/>
                         </span>;
 
     const cancelButton = <span disabled={this.props.csv.isFileUploaded} className="button is-info is-outline" onClick={() => this.handleCancelFileUpload()}>
-                          <i className="fas fa-times"></i>
+                          <FontAwesomeIcon icon="times"/>
                         </span>;
 
     function validationClass(requiredType, isError, forInput) {
@@ -229,7 +230,7 @@ export default class IngestCSV extends Component {
                     />
                     <span className="file-cta">
                       <span className="file-icon">
-                        <i className="fas fa-upload"></i>
+                        <FontAwesomeIcon icon="upload"/>
                       </span>
                       <span className="file-label">
                         {!this.props.csv.isParsing && !this.props.csv.parseAttempted &&
@@ -317,7 +318,7 @@ export default class IngestCSV extends Component {
                                 onClick={() => this.handleDeleteCustomField(dest.key, !dest.isCustom)}
                                 disabled={!dest.isCustom}
                               >
-                                <i className="fas fa-times"></i>
+                                <FontAwesomeIcon icon="times"/>
                               </a>
                             </td>
                           </tr>

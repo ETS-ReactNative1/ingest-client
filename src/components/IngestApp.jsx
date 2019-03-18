@@ -5,8 +5,8 @@ import App from '../containers/app_container';
 import Transient from './Transient';
 import userManager from "../utils/userManager";
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faBars, faSpinner } from '@fortawesome/free-solid-svg-icons';
-library.add(faBars, faSpinner);
+import { faBars, faSpinner, faUpload, faTimes, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+library.add(faBars, faSpinner, faUpload, faTimes, faPlay, faPause);
 
 export default class IngestApp extends Component {
 
