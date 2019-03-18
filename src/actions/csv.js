@@ -3,7 +3,12 @@ import Papa from 'papaparse';
 export function initial() {
   return {
     types: ['GET_INITIAL', 'GET_INITIAL_SUCCESS', 'GET_INITIAL_FAILURE'],
-    promise: client => client.get('/fields')
+    payload: {
+      request: {
+        method: 'get',
+        url: `/api/ingest/fields`
+      }
+    }
   }
 }
 
