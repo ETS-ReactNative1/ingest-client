@@ -1,19 +1,17 @@
-# base image
-FROM node:9.4
+FROM node:8
 
-# set working directory
-RUN mkdir /usr/src/app
-WORKDIR /usr/src/app
+ADD package-lock.json /package-lock.json
+ADD package.json /package.json
 
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-ADD package.json /usr/src/app/package.json
+ENV NODE_PATH=/node_modules
+ENV PATH=$PATH:/node_modules/.bin
 RUN npm install
-RUN npm install react-scripts@1.1.0 -g --silent
 
-EXPOSE 8500
+WORKDIR /app
+ADD . /app
+
+EXPOSE 3000
 EXPOSE 35729
 
-ENTRYPOINT ["/bin/bash", "/usr/src/app/run.sh"]
+ENTRYPOINT ["/bin/bash", "/app/run.sh"]
 CMD ["start"]
