@@ -1,0 +1,13 @@
+.navbar-sso {
+  box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+  z-index: 31; //.navbar set at 30
+  .navbar-brand {
+    .brandname {
+      font-family: 'Varela', sans-serif;
+      font-size: 22px;
+    }
+    .hamburger {
+      font-size: 25px;
+    }
+  }
+}

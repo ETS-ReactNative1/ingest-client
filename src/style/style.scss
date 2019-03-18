@@ -1,5 +1,13 @@
+@charset "utf-8";
 @import "util/reset";
 @import "util/normalize";
+
+// Set your brand colors
+$purple: #79589F;
+
+// Update Bulma's global variables
+$primary: $purple;
+$link: $purple;
 
 @import "../../node_modules/bulma/bulma.sass";
 
@@ -9,5 +17,9 @@
 @import "elements/csv";
 @import "elements/file-upload-progress-bar";
 @import "elements/delete-modal";
+@import "elements/slideout";
+@import "elements/menu";
+@import "elements/navbar-sso";
+@import "elements/transient";
 
 @import "main";
