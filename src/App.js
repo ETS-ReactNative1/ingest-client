@@ -13,7 +13,7 @@ const history = createBrowserHistory()
 const initialState = {}
 const socketClient = new SocketClient();
 const apiClient = axios.create({
-  baseURL: process.env.REACT_APP_API_URL,
+  baseURL: `http://${window._env_.REACT_APP_API_HOST}`,
   responseType: 'json',
   withCredentials: true
 });
