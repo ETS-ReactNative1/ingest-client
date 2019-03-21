@@ -49,6 +49,7 @@
     "react": "^16.4.1",
     "react-dev-utils": "^5.0.1",
     "react-dom": "^16.4.1",
+    "react-icons": "^3.5.0",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",
     "react-toggle": "^4.0.2",
@@ -63,7 +64,6 @@
     "resumablejs": "^1.1.0",
     "sails.io.js": "^1.2.1",
     "sass-loader": "^7.0.3",
-    "slideout": "^1.0.1",
     "socket.io-client": "^2.1.1",
     "style-loader": "0.19.0",
     "sw-precache-webpack-plugin": "0.11.4",
@@ -74,7 +74,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "chmod +x ./env.sh && ./env.sh && cp env-config.js ./public/ && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
   },

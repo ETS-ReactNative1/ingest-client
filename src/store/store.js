@@ -6,9 +6,7 @@ import {
 
 import { routerMiddleware } from 'connected-react-router'
 import createRootReducer from '../reducers/root_reducer'
-import axios from 'axios';
 import axiosMiddleware from 'redux-axios-middleware';
-import userManager from "../utils/userManager";
 
 // MIDDLEWARES
 import thunk from 'redux-thunk'
