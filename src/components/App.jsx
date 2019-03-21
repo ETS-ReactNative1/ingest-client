@@ -4,7 +4,14 @@ import NavbarTop from '../containers/navbar_top_container'
 import IngestCSV from '../containers/ingest_csv_container'
 import IngestDatabase from '../containers/ingest_database_container'
 import IngestApi from '../containers/ingest_api_container'
-import Slideout from 'slideout';
+import {
+    FaCubes,
+    FaPoll,
+    FaFolder,
+    FaChartBar,
+    FaCog,
+    FaBookOpen
+} from "react-icons/fa";
 
 const routes = [
   {
@@ -32,21 +39,18 @@ export default class App extends Component {
       progressBarInt: 0,
       messageStatus: '',
       fileList: {files: []},
-      isPaused: false
+      isPaused: false,
+      isMenuOpen: true,
     };
   }
 
   handleSlideoutToggle = (event) => {
-    this.slideout.toggle();
+    this.setState(prevState => ({
+      isMenuOpen: !prevState.isMenuOpen
+    }));
   }
 
   componentDidMount() {
-    this.slideout = new Slideout({
-      'panel': document.getElementById('ingest'),
-      'menu': document.getElementById('menu'),
-      'padding': 256,
-      'tolerance': 70
-    });
     return this.props.getCoreName()
       .then(() => this.props.getNumDocs()) //TODO re-enable websocket methods
     //   .then(() => this.props.receiveNumDocs())
@@ -79,6 +83,12 @@ export default class App extends Component {
 
   render() {
 
+    const {
+        REACT_APP_DASHBOARD_URL,
+        REACT_APP_INGEST_URL,
+        REACT_APP_DOCUMETATION_URL
+    } = window._env_;
+
     const numberWithCommas = (x) => {
       try {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0;
@@ -107,25 +117,53 @@ export default class App extends Component {
 
     return (
       <React.Fragment>
-        <nav id="menu">
-          <nav className="navbar navbar-shadow" role="navigation" aria-label="main navigation">
-            <div className="navbar-brand">
-              <h1 className="navbar-item menu-title">Menu</h1>
-            </div>
-          </nav>
-          <div className="menu-body">
-            <h2 className="menu-body-title">Applications</h2>
-            <ul>
-              <li>
-                <a href="http://localhost:8201" className="menu-body-item-text">Results Viewer</a>
-              </li>
-              <li className="active">
-                <a className="menu-body-item-text">Ingestion</a>
-              </li>
-              <li>
-                <a className="menu-body-item-text">Report Type Mapper</a>
-              </li>
-            </ul>
+        <nav id="menu" className={ this.state.isMenuOpen ? 'open' : ''}>
+          <div className="nav-links">
+              <a
+                  href={`http://${REACT_APP_DASHBOARD_URL}`}
+                  className="nav-link has-text-centered"
+              >
+                  <span className="link-icon is-size-4">
+                      <FaPoll />
+                  </span>
+                  Dashboard
+              </a>
+              <a
+                  href={`http://${REACT_APP_INGEST_URL}`}
+                  className="nav-link has-text-centered"
+              >
+                  <span className="link-icon is-size-4">
+                      <FaFolder />
+                  </span>
+                  Documents
+              </a>
+              <a
+                  href="/runner"
+                  className="nav-link has-text-centered"
+              >
+                  <span className="link-icon is-size-4">
+                      <FaCubes />
+                  </span>
+                  Query Builder
+              </a>
+              <a
+                  href="/"
+                  className="nav-link has-text-centered"
+              >
+                  <span className="link-icon is-size-4">
+                      <FaChartBar />
+                  </span>
+                  Results
+              </a>
+              <a
+                  href={REACT_APP_DOCUMETATION_URL}
+                  className="nav-link has-text-centered"
+              >
+                  <span className="link-icon is-size-4">
+                      <FaBookOpen />
+                  </span>
+                  Documentation
+              </a>
           </div>
         </nav>
         <div id="ingest">
