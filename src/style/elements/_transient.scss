@@ -3,6 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex: auto;
   .transient-spinner {
     font-size: 45px;
     color: $primary;
