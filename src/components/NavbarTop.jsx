@@ -3,7 +3,6 @@ import { Route, Link } from 'react-router-dom';
 import userManager from "../utils/userManager";
 import { push } from 'connected-react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Slideout from 'slideout';
 
 class NavbarTop extends Component {
 
