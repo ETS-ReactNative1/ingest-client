@@ -30,7 +30,6 @@ const routes = [
 ];
 
 export default class App extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -85,7 +84,7 @@ export default class App extends Component {
 
     const {
         REACT_APP_DASHBOARD_URL,
-        REACT_APP_INGEST_URL,
+        REACT_APP_RESULTS_URL,
         REACT_APP_DOCUMETATION_URL
     } = window._env_;
 
@@ -119,51 +118,36 @@ export default class App extends Component {
       <React.Fragment>
         <nav id="menu" className={ this.state.isMenuOpen ? 'open' : ''}>
           <div className="nav-links">
-              <a
-                  href={`http://${REACT_APP_DASHBOARD_URL}`}
-                  className="nav-link has-text-centered"
-              >
-                  <span className="link-icon is-size-4">
-                      <FaPoll />
-                  </span>
-                  Dashboard
-              </a>
-              <a
-                  href={`http://${REACT_APP_INGEST_URL}`}
-                  className="nav-link has-text-centered"
-              >
-                  <span className="link-icon is-size-4">
-                      <FaFolder />
-                  </span>
-                  Documents
-              </a>
-              <a
-                  href="/runner"
-                  className="nav-link has-text-centered"
-              >
-                  <span className="link-icon is-size-4">
-                      <FaCubes />
-                  </span>
-                  Query Builder
-              </a>
-              <a
-                  href="/"
-                  className="nav-link has-text-centered"
-              >
-                  <span className="link-icon is-size-4">
-                      <FaChartBar />
-                  </span>
-                  Results
-              </a>
-              <a
-                  href={REACT_APP_DOCUMETATION_URL}
-                  className="nav-link has-text-centered"
-              >
-                  <span className="link-icon is-size-4">
-                      <FaBookOpen />
-                  </span>
-                  Documentation
-              </a>
+            <a href={`http://${REACT_APP_DASHBOARD_URL}`} className="nav-link has-text-centered">
+              <span className="link-icon is-size-4">
+                <FaPoll/>
+              </span>
+              Dashboard
+            </a>
+            <a className="nav-link has-text-centered active">
+              <span className="link-icon is-size-4">
+                <FaFolder/>
+              </span>
+              Documents
+            </a>
+            <a href={`http://${REACT_APP_RESULTS_URL}/runner`} className="nav-link has-text-centered">
+              <span className="link-icon is-size-4">
+                <FaCubes/>
+              </span>
+              Query Builder
+            </a>
+            <a href={`http://${REACT_APP_RESULTS_URL}`} className="nav-link has-text-centered">
+              <span className="link-icon is-size-4">
+                <FaChartBar/>
+              </span>
+              Results
+            </a>
+            <a href={REACT_APP_DOCUMETATION_URL} className="nav-link has-text-centered">
+              <span className="link-icon is-size-4">
+                <FaBookOpen />
+              </span>
+              Documentation
+            </a>
           </div>
         </nav>
         <div id="ingest">
