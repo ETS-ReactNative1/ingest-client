@@ -36,7 +36,7 @@ export default class IngestCSV extends Component {
   componentDidMount() {
 
     let ResumableField = new Resumable({
-      target: `${process.env.REACT_APP_API_URL}/upload`,
+      target: `${process.env.REACT_APP_API_HOST}/api/ingest/upload`,
       chunkSize:1*1024*1024,
       simultaneousUploads:4,
       testChunks:true,
