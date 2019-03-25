@@ -302,7 +302,7 @@ export function csvReducer(state = initialState, action = {}) {
     case 'CREATE_INGEST_RECORD_SUCCESS': {
       return {
         ...state,
-        ingestId: action.result.id,
+        ingestId: action.payload.data.id,
         isIngesting: true, //carry over for file upload which starts next
         status: 'Created ingest record.'
       }
@@ -334,7 +334,7 @@ export function csvReducer(state = initialState, action = {}) {
     case 'SCHEDULE_INGEST_SUCCESS': {
       return {
         ...state,
-        ingestId: action.result.id,
+        ingestId: action.payload.data.id,
         isSubmitInProgress: false,
         isSubmitErroneous: false,
         isSubmitSuccessful: true,
