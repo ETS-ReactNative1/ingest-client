@@ -3,7 +3,7 @@ import csvValidationErrors    from '../utils/csvValidationErrors';
 import csvIsValid             from '../utils/csvIsValid';
 
 const formValidationMiddleware = ({ dispatch, getState}) => next => action => {
-  if (action.type !== "validate") {
+  if (action.validate !== "csv") {
     return next(action)
   }
   const { data: csv } = action;
