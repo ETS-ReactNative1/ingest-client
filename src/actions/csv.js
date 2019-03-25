@@ -161,23 +161,31 @@ export function receiveCsvIngestUpdate() {
 
 export function createIngestRecord(form) {
   return {
-    type: 'validate',
+    validate: 'csv',
     data: form, //form validation middleware needs data in order to validate.
     types: [ 'CREATE_INGEST_RECORD', 'CREATE_INGEST_RECORD_SUCCESS', 'CREATE_INGEST_RECORD_FAILURE'],
-    promise: client => client.post('/ingest/csv', {
-      data: form
-    })
+    payload: {
+      request: {
+        method: 'post',
+        url: '/api/ingest/csv',
+        data: form
+      }
+    }
   }
 }
 
 export function scheduleIngestJob(ingestId) {
   return {
     types: [ 'SCHEDULE_INGEST', 'SCHEDULE_INGEST_SUCCESS', 'SCHEDULE_INGEST_FAILURE'],
-    promise: client => client.post(`/ingest/${ingestId}/schedule`, {
-      data: {
-        id: ingestId
+    payload: {
+      request: {
+        method: 'post',
+        url: `/api/ingest/${ingestId}/schedule`,
+        data: {
+          id: ingestId
+        }
       }
-    })
+    }
   }
 }
 
