@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import NavbarTop from '../containers/navbar_top_container'
 import IngestCSV from '../containers/ingest_csv_container'
 import IngestDatabase from '../containers/ingest_database_container'
 import IngestApi from '../containers/ingest_api_container'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
     FaCubes,
     FaPoll,
@@ -53,7 +54,7 @@ export default class App extends Component {
     return this.props.getCoreName()
       .then(() => this.props.getNumDocs()) //TODO re-enable websocket methods
     //   .then(() => this.props.receiveNumDocs())
-    //   .then(() => this.props.getIngestPage())
+      .then(() => this.props.getIngestPage())
     //   .then(() => this.props.receiveIngestRecordStatusUpdate())
   }
 
@@ -83,9 +84,9 @@ export default class App extends Component {
   render() {
 
     const {
-        REACT_APP_DASHBOARD_URL,
-        REACT_APP_RESULTS_URL,
-        REACT_APP_DOCUMETATION_URL
+      REACT_APP_DASHBOARD_URL,
+      REACT_APP_RESULTS_URL,
+      REACT_APP_DOCUMETATION_URL
     } = window._env_;
 
     const numberWithCommas = (x) => {
@@ -195,7 +196,7 @@ export default class App extends Component {
                               onClick={() => this.handleToggleDeleteIngestModal(item.id, 'open')}
                               disabled={item.confirmDeleteModalOpen}
                             >
-                              <i className="fas fa-times"></i>
+                              <FontAwesomeIcon icon="times"/>
                             </a>
                           }
                           { item.confirmDeleteModalOpen &&
@@ -274,6 +275,7 @@ export default class App extends Component {
                     component={route.main}
                   />
                 ))}
+                <Redirect from="/" exact to="/csv" />
               </div>
             </div>
           </div>
