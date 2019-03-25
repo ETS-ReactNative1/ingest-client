@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
-import Loading from '../containers/loading_container';
 import App from '../containers/app_container';
 import Transient from './Transient';
-import userManager from "../utils/userManager";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars, faSpinner, faUpload, faTimes, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 library.add(faBars, faSpinner, faUpload, faTimes, faPlay, faPause);
