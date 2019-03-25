@@ -1,14 +1,24 @@
 export function getIngestPage(page) {
   return {
     types: ['GET_INGEST_PAGE', 'GET_INGEST_PAGE_SUCCESS', 'GET_INGEST_PAGE_FAILURE'],
-    promise: client => client.get(`/ingest${page ? '?page='+page+'' : '' }`)
+    payload: {
+      request: {
+        method: 'get',
+        url: `/api/ingest${page ? '?page='+page+'' : '' }`
+      }
+    }
   }
 }
 
 export function deleteIngestRecord(ingestId) {
   return {
     types: ['DELETE_INGEST_RECORD', 'DELETE_INGEST_RECORD_SUCCESS', 'DELETE_INGEST_RECORD_FAILURE'],
-    promise: client => client.get(`/ingest/${ingestId}/delete`)
+    payload: {
+      request: {
+        method: 'get',
+        url: `/api/ingest/${ingestId}/delete`
+      }
+    }
   }
 }
 
