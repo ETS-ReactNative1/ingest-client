@@ -4,7 +4,7 @@ export function getCoreName() { //using redux axios middleware
     payload: {
       request: {
         method: 'get',
-        url: `/api/ingest/core`
+        url: `/ingest/core`
       }
     }
   }
@@ -16,7 +16,7 @@ export function getNumDocs() {
     payload: {
       request: {
         method: 'get',
-        url: '/api/ingest/numDocs'
+        url: '/ingest/numDocs'
       }
     }
   }

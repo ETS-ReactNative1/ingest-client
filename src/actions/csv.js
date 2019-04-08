@@ -6,7 +6,7 @@ export function initial() {
     payload: {
       request: {
         method: 'get',
-        url: `/api/ingest/fields`
+        url: `/ingest/fields`
       }
     }
   }
@@ -167,7 +167,7 @@ export function createIngestRecord(form) {
     payload: {
       request: {
         method: 'post',
-        url: '/api/ingest/csv',
+        url: '/ingest/csv',
         data: form
       }
     }
@@ -180,7 +180,7 @@ export function scheduleIngestJob(ingestId) {
     payload: {
       request: {
         method: 'post',
-        url: `/api/ingest/${ingestId}/schedule`,
+        url: `/ingest/${ingestId}/schedule`,
         data: {
           id: ingestId
         }

@@ -4,7 +4,7 @@ export function getIngestPage(page) {
     payload: {
       request: {
         method: 'get',
-        url: `/api/ingest${page ? '?page='+page+'' : '' }`
+        url: `/ingest${page ? '?page='+page+'' : '' }`
       }
     }
   }
@@ -16,7 +16,7 @@ export function deleteIngestRecord(ingestId) {
     payload: {
       request: {
         method: 'get',
-        url: `/api/ingest/${ingestId}/delete`
+        url: `/ingest/${ingestId}/delete`
       }
     }
   }
