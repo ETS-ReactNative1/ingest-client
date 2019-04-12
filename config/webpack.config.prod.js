@@ -140,7 +140,7 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
-        include: paths.appSrc,
+        include: [paths.appSrc, paths.callbackSrc]
       },
       {
         // "oneOf" will traverse all following loaders until one will
