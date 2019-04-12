@@ -1,11 +1,15 @@
 # => Build container
 FROM node:alpine as builder
+
+# Add bash
+RUN apk add --no-cache git
+
 WORKDIR /app
 COPY package.json .
-COPY package-lock.json .
-RUN npm install
+COPY yarn.lock .
+RUN yarn
 COPY . .
-RUN npm build
+RUN yarn build
 
 # => Run container
 FROM nginx:1.15.2-alpine
