@@ -24,7 +24,8 @@ import {
 function mapStateToProps(state) {
   return {
     router: state.router,
-    csv: state.csv
+    csv: state.csv,
+    oidc: state.oidc,
   };
 }
 
