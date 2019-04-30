@@ -1,33 +1,57 @@
-import { createStore, applyMiddleware } from 'redux'
+import {
+  applyMiddleware,
+  compose,
+  createStore
+} from 'redux';
 
-// ROOT REDUCER
-import rootReducer from '../reducers/root_reducer'
+import { routerMiddleware } from 'connected-react-router'
+import createRootReducer from '../reducers/root_reducer'
+import axiosMiddleware from 'redux-axios-middleware';
 
 // MIDDLEWARES
 import thunk from 'redux-thunk'
 import { createLogger } from "redux-logger"
-import socketMiddleware from '../middleware/socketMiddleware';
-import clientMiddleware from '../middleware/clientMiddleware';
-import csvValidationMiddleware from '../middleware/csvValidationMiddleware';
-import csvValidateAttributeUpdateMiddleware from '../middleware/csvValidateAttributeUpdateMiddleware';
+import socketMiddleware from '../middleware/socketMiddleware'
+import csvValidationMiddleware from '../middleware/csvValidationMiddleware'
+import csvValidateAttributeUpdateMiddleware from '../middleware/csvValidateAttributeUpdateMiddleware'
+import createSagaMiddleware from 'redux-saga';
+import { redirectToODICSaga } from '../utils/sagas'
 
-export default function configureStore(initialState, socketClient, apiClient) {
+const logger = createLogger();
+const sagaMiddleware = createSagaMiddleware();
+const axiosMiddlewareOptions = {
+  interceptors: {
+    request: [
+      (state, config) => {
+        if (state.getState().oidc.user) {
+          config.headers['Authorization'] = 'Bearer ' + state.getState().oidc.user.access_token
+        }
+        return config
+      }
+    ]
+  }
+}
 
-  const logger = createLogger()
+export default function configureStore(initialState, socketClient, apiClient, history) {
 
   const store = createStore(
-    rootReducer,
+    createRootReducer(history),
     initialState,
-    applyMiddleware(
-      csvValidationMiddleware,
-      csvValidateAttributeUpdateMiddleware,
-      thunk,
-      socketMiddleware(socketClient),
-      clientMiddleware(apiClient),
-      logger
+    compose(
+      applyMiddleware(
+        sagaMiddleware,
+        routerMiddleware(history),
+        csvValidationMiddleware,
+        csvValidateAttributeUpdateMiddleware,
+        thunk,
+        socketMiddleware(socketClient),
+        axiosMiddleware(apiClient, axiosMiddlewareOptions),
+        logger
+      ),
     )
-  )
+  );
+
+  sagaMiddleware.run(redirectToODICSaga);
 
   return store;
-
 }

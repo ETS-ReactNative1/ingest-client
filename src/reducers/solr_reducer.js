@@ -19,9 +19,11 @@ export function solrReducer(state = initialState, action = {}) {
       }
     }
     case 'GET_CORE_NAME_SUCCESS': {
+      const { coreName } = action.payload.data;
+
       return {
         ...state,
-        coreName: action.result.coreName,
+        coreName: coreName,
         isCoreNameLoading: false,
         isCoreNameError: false
       }
@@ -40,9 +42,11 @@ export function solrReducer(state = initialState, action = {}) {
       }
     }
     case 'GET_NUM_DOCS_SUCCESS': {
+      const { numDocs } = action.payload.data;
+
       return {
         ...state,
-        numDocs: action.result.numDocs,
+        numDocs: numDocs,
         isNumDocsLoading: false,
         isNumDocsError: false
       }

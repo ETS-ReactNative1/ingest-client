@@ -1,14 +1,24 @@
-export function getCoreName() {
+export function getCoreName() { //using redux axios middleware
   return {
     types: ['GET_CORE_NAME', 'GET_CORE_NAME_SUCCESS', 'GET_CORE_NAME_FAILURE'],
-    promise: client => client.get('/solr/core')
+    payload: {
+      request: {
+        method: 'get',
+        url: `/ingest/core`
+      }
+    }
   }
 }
 
 export function getNumDocs() {
   return {
     types: ['GET_NUM_DOCS', 'GET_NUM_DOCS_SUCCESS', 'GET_NUM_DOCS_FAILURE'],
-    promise: client => client.get('/solr/numDocs')
+    payload: {
+      request: {
+        method: 'get',
+        url: '/ingest/numDocs'
+      }
+    }
   }
 }
 

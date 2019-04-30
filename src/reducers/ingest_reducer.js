@@ -19,20 +19,28 @@ export function ingestReducer(state = initialState, action = {}) {
       }
     }
     case 'GET_INGEST_PAGE_SUCCESS': {
-      const items = action.result.records.reduce((obj, item) => {
+      const {
+        records,
+        isNextDisabled,
+        page,
+        pageSize
+      } = action.payload.data;
+
+      const items = records.reduce((obj, item) => {
         obj[item.id] = item;
         return obj;
       }, {});
+
       return {
         ...state,
         isLoading: false,
         isLoaded: true,
         isLoadError: false,
-        itemsArr: action.result.records,
+        itemsArr: records,
         items: items,
-        isNextDisabled: action.result.isNextDisabled ? true : false,
-        currentPage: action.result.page,
-        pageSize: action.result.pageSize
+        isNextDisabled: isNextDisabled ? true : false,
+        currentPage: page,
+        pageSize: pageSize
       }
     }
     case 'GET_INGEST_PAGE_FAILURE': {
@@ -50,7 +58,7 @@ export function ingestReducer(state = initialState, action = {}) {
     }
     case 'DELETE_INGEST_RECORD_SUCCESS': {
       const itemsArr = state.itemsArr.map(item => {
-        if (item.id === action.result.id) {
+        if (item.id === action.payload.data.id) {
           return {
             ...item,
             status: 'deleted'
@@ -62,8 +70,8 @@ export function ingestReducer(state = initialState, action = {}) {
         ...state,
         items: {
           ...state.items,
-          [action.result.id]: {
-            ...state.items[action.result.id],
+          [action.payload.data.id]: {
+            ...state.items[action.payload.data.id],
             status: 'deleted'
           }
         },

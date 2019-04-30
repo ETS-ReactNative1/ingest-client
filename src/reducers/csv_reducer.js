@@ -71,7 +71,7 @@ export function csvReducer(state = initialState, action = {}) {
         loadError: action.error
       }
     case 'GET_INITIAL_SUCCESS':
-      const formErrorsMappings = Object.keys(action.result).reduce((obj, field) => {
+      const formErrorsMappings = Object.keys(action.payload.data).reduce((obj, field) => {
         obj[field] = null;
         return obj;
       }, {});
@@ -79,16 +79,16 @@ export function csvReducer(state = initialState, action = {}) {
         ...state,
         isLoading: false,
         loaded: true,
-        destination: action.result,
-        destinationArr: Object.keys(action.result).map((key, index) => {
+        destination: action.payload.data,
+        destinationArr: Object.keys(action.payload.data).map((key, index) => {
           return {
-            ...action.result[key],
+            ...action.payload.data[key],
             key: key
           }
         }),
         form: {
           ...state.form,
-          mappings: action.result,
+          mappings: action.payload.data,
           errors: {
             ...state.form.errors,
             ...formErrorsMappings
@@ -302,7 +302,7 @@ export function csvReducer(state = initialState, action = {}) {
     case 'CREATE_INGEST_RECORD_SUCCESS': {
       return {
         ...state,
-        ingestId: action.result.id,
+        ingestId: action.payload.data.id,
         isIngesting: true, //carry over for file upload which starts next
         status: 'Created ingest record.'
       }
@@ -334,7 +334,7 @@ export function csvReducer(state = initialState, action = {}) {
     case 'SCHEDULE_INGEST_SUCCESS': {
       return {
         ...state,
-        ingestId: action.result.id,
+        ingestId: action.payload.data.id,
         isSubmitInProgress: false,
         isSubmitErroneous: false,
         isSubmitSuccessful: true,
@@ -531,7 +531,6 @@ export function csvReducer(state = initialState, action = {}) {
 
       let destArrIndex;
       state.destinationArr.forEach((item, index) => {
-        console.log(action.result.field);
         if (item.key === action.result.field) {
           return destArrIndex = index;
         }
