@@ -1,9 +1,9 @@
-import socketIOClient from 'socket.io-client'
-import sailsIOClient from 'sails.io.js'
-var io = sailsIOClient(socketIOClient)
+import socketIOClient from 'socket.io-client';
+import sailsIOClient from 'sails.io.js';
+var io = sailsIOClient(socketIOClient);
 io.sails.autoConnect = false;
 
-const host = `${window.location.protocol}//${window._env_.REACT_APP_API_HOST}/ingest/socket`;
+const host = `${window.location.protocol}//${window._env_.REACT_APP_API_HOST}`;
 
 export default class socketAPI {
   socket;
