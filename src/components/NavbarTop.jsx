@@ -15,6 +15,11 @@ class NavbarTop extends Component {
   }
 
   render() {
+    const {
+      status : socketStatus,
+      className : socketClass
+    } = this.props.socket;
+
     return (
       <nav className="navbar-sso navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
@@ -30,6 +35,15 @@ class NavbarTop extends Component {
         <div id="navbarBasicExample" className="navbar-menu">
 
           <div className="navbar-end">
+            <div className="navbar-item">
+              <div className={`socket-status ${socketClass}`}>
+                <FontAwesomeIcon
+                  icon="plug"
+                  className="websocket-status-icon"
+                />
+                <span>{ socketStatus }</span>
+              </div>
+            </div>
             { this.props.oidc.user &&
               <div className="navbar-item has-dropdown is-hoverable">
                 <a className="navbar-link">
