@@ -10,4 +10,34 @@
       font-size: 25px;
     }
   }
+  .socket-status {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 4px 5px;
+    border-radius: 3px;
+    -webkit-transition : border 500ms ease-in, color 500ms ease-in;
+    -moz-transition : border 500ms ease-in, color 500ms ease-in;
+    -o-transition : border 500ms ease-in, color 500ms ease-in;
+    transition : border 500ms ease-in, color 500ms ease-in;
+    &.is-success {
+      border: 1px solid $success;
+      color: $success;
+    }
+    &.is-warning {
+      border: 1px solid $warning;
+      color: $warning;
+    }
+    &.is-danger {
+      border: 1px solid $danger;
+      color: $danger;
+    }
+    .websocket-status-icon {
+      margin-right: 5px;
+    }
+    span {
+      font-size: 13px;
+    }
+  }
 }
