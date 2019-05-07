@@ -5,7 +5,8 @@ import { push } from 'connected-react-router'
 function mapStateToProps(state) {
   return {
     router: state.router,
-    oidc: state.oidc
+    oidc: state.oidc,
+    socket: state.socket
   };
 }
 
