@@ -1,5 +1,5 @@
 # => Build container
-FROM node:alpine as builder
+FROM node:12.1.0-alpine as builder
 
 # Add bash
 RUN apk add --no-cache git
