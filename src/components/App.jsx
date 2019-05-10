@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Link, Redirect, Switch } from 'react-router-dom';
 import NavbarTop from '../containers/navbar_top_container'
 import IngestCSV from '../containers/ingest_csv_container'
 import IngestDatabase from '../containers/ingest_database_container'
@@ -22,10 +22,12 @@ const routes = [
   },
   {
     path: "/database",
+    exact: false,
     main: () => <IngestDatabase/>
   },
   {
     path: "/api",
+    exact: false,
     main: () => <IngestApi/>
   }
 ];
@@ -52,10 +54,10 @@ export default class App extends Component {
 
   componentDidMount() {
     return this.props.getCoreName()
-      .then(() => this.props.getNumDocs()) //TODO re-enable websocket methods
-    //   .then(() => this.props.receiveNumDocs())
+      .then(() => this.props.getNumDocs())
+      .then(() => this.props.receiveNumDocs())
       .then(() => this.props.getIngestPage())
-    //   .then(() => this.props.receiveIngestRecordStatusUpdate())
+      .then(() => this.props.receiveIngestRecordStatusUpdate())
   }
 
   handleNextPage = () => {
@@ -266,7 +268,7 @@ export default class App extends Component {
                   </div>
                 </div>
               </section>
-              <div>
+              <Switch>
                 {routes.map((route, index) => (
                   <Route
                     key={index}
@@ -275,8 +277,8 @@ export default class App extends Component {
                     component={route.main}
                   />
                 ))}
-                <Redirect from="/" exact to="/csv" />
-              </div>
+                <Redirect to="/csv"/>
+              </Switch>
             </div>
           </div>
         </div>
