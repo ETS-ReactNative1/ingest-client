@@ -17,13 +17,15 @@
     justify-content: flex-start;
     padding: 4px 5px;
     border-radius: 3px;
-    -webkit-transition : border 500ms ease-in, color 500ms ease-in;
-    -moz-transition : border 500ms ease-in, color 500ms ease-in;
-    -o-transition : border 500ms ease-in, color 500ms ease-in;
-    transition : border 500ms ease-in, color 500ms ease-in;
+    -webkit-transition : border 500ms ease-in, color 500ms ease-in, opacity 3s ease-in-out;
+    -moz-transition : border 500ms ease-in, color 500ms ease-in, opacity 3s ease-in-out;
+    -o-transition : border 500ms ease-in, color 500ms ease-in, opacity 3s ease-in-out;
+    transition : border 500ms ease-in, color 500ms ease-in, opacity 3s ease-in-out;
+    opacity: 1;
     &.is-success {
       border: 1px solid $success;
       color: $success;
+      opacity: 0;
     }
     &.is-warning {
       border: 1px solid $warning;
