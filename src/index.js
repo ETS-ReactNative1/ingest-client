@@ -1,4 +1,4 @@
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-registerServiceWorker();
+// registerServiceWorker(); //TODO causing issue on USER_EXPIRED
