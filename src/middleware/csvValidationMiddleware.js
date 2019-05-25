@@ -7,9 +7,8 @@ const formValidationMiddleware = ({ dispatch, getState}) => next => action => {
     return next(action)
   }
   const { data: csv } = action;
-  // console.log('csv: ',csv);
+
   let errors = csvValidationErrors(csv)
-  // console.log('errors: ',errors);
 
   const inputs = {
     file: {
@@ -23,9 +22,7 @@ const formValidationMiddleware = ({ dispatch, getState}) => next => action => {
     const requiredType = inputs[key].requiredType;
     counts[requiredType] = errors[key] ? counts[requiredType] + 1 : counts[requiredType];
     return counts;
-  }, { hard: 0, soft: 0});
-
-  console.log('counts: ',counts);
+  }, { hard: 0, soft: 0, none: 0});
 
   // if (!csvIsValid(errors)) {
   if (counts.hard > 0) {
