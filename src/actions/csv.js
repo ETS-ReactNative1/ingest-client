@@ -110,6 +110,7 @@ export function parseHeader(file) {
     Papa.parse(file, {
       header: false,
       preview: 1,
+      delimiter: ",",
       chunk: function(chunk) {
         return dispatch(parseHeaderFulfilledAction(chunk, file));
       },
