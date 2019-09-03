@@ -86,10 +86,12 @@ export default class App extends Component {
   render() {
 
     const {
-      REACT_APP_DASHBOARD_URL,
-      REACT_APP_RESULTS_URL,
-      REACT_APP_DOCUMETATION_URL
+      DASHBOARD_URL,
+      RESULTS_URL,
+      DOCUMETATION_URL
     } = window._env_;
+
+    console.log('window: ',window._env_);
 
     const numberWithCommas = (x) => {
       try {
@@ -121,7 +123,7 @@ export default class App extends Component {
       <React.Fragment>
         <nav id="menu" className={ this.state.isMenuOpen ? 'open' : ''}>
           <div className="nav-links">
-            <a href={`http://${REACT_APP_DASHBOARD_URL}`} className="nav-link has-text-centered">
+            <a href={`${window.location.protocol}//${DASHBOARD_URL}`} className="nav-link has-text-centered">
               <span className="link-icon is-size-4">
                 <FaPoll/>
               </span>
@@ -133,19 +135,19 @@ export default class App extends Component {
               </span>
               Documents
             </a>
-            <a href={`http://${REACT_APP_RESULTS_URL}/runner`} className="nav-link has-text-centered">
+            <a href={`${window.location.protocol}//${RESULTS_URL}/runner`} className="nav-link has-text-centered">
               <span className="link-icon is-size-4">
                 <FaCubes/>
               </span>
               Query Builder
             </a>
-            <a href={`http://${REACT_APP_RESULTS_URL}`} className="nav-link has-text-centered">
+            <a href={`${window.location.protocol}//${RESULTS_URL}`} className="nav-link has-text-centered">
               <span className="link-icon is-size-4">
                 <FaChartBar/>
               </span>
               Results
             </a>
-            <a href={REACT_APP_DOCUMETATION_URL} className="nav-link has-text-centered">
+            <a href={DOCUMETATION_URL} className="nav-link has-text-centered">
               <span className="link-icon is-size-4">
                 <FaBookOpen />
               </span>
@@ -277,7 +279,7 @@ export default class App extends Component {
                     component={route.main}
                   />
                 ))}
-                <Redirect to="/csv"/>
+                <Redirect to={`/csv`}/>
               </Switch>
             </div>
           </div>
