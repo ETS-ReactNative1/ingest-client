@@ -71,7 +71,7 @@ export default class IngestCSV extends Component {
   componentDidMount() {
 
     let ResumableField = new Resumable({
-      target: `${window.location.protocol}//${window._env_.REACT_APP_API_HOST}/ingest/upload`,
+      target: `${window.location.protocol}//${window._env_.API_HOST}/ingest/upload`,
       headers: {
         Authorization: 'Bearer ' + this.props.oidc.user.access_token
       },
