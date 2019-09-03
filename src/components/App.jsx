@@ -91,8 +91,6 @@ export default class App extends Component {
       DOCUMETATION_URL
     } = window._env_;
 
-    console.log('window: ',window._env_);
-
     const numberWithCommas = (x) => {
       try {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0;
