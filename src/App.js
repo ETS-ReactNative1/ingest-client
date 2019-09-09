@@ -9,11 +9,13 @@ import SocketClient from './helpers/SocketClient';
 import configureStore from './store/store';
 import { createBrowserHistory } from 'history'
 
-const history = createBrowserHistory()
+const history = createBrowserHistory({
+  basename: process.env.PUBLIC_URL
+})
 const initialState = {}
 const socketClient = new SocketClient();
 const apiClient = axios.create({
-  baseURL: `https://${window._env_.REACT_APP_API_HOST}`,
+  baseURL: `${window.location.protocol}//${window._env_.API_HOST}`,
   responseType: 'json',
   withCredentials: true
 });

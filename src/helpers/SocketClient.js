@@ -3,7 +3,7 @@ import sailsIOClient from 'sails.io.js';
 var io = sailsIOClient(socketIOClient);
 io.sails.autoConnect = false;
 
-const host = `${window.location.protocol}//${window._env_.REACT_APP_API_HOST}`;
+const host = `${window.location.protocol}//${window._env_.SOCKET_URL}`;
 
 export default class socketAPI {
   socket;
